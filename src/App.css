@@ -3,5 +3,14 @@
 }
 
 .Movie-Cover {
-  width: 100%;
+  width: 25%;
+}
+
+.container {
+  display: flex;
+}
+
+.item {
+  flex: 1;
+  margin: 30px;
 }
