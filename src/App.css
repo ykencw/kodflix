@@ -2,15 +2,11 @@
   text-align: center;
 }
 
-.Movie-Cover {
-  width: 25%;
-}
-
 .container {
   display: flex;
 }
 
 .item {
   flex: 1;
-  margin: 30px;
+  padding: 30px;
 }
