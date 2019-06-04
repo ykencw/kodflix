@@ -11,14 +11,14 @@ function Gallery() {
     return (
       <p className="showTitles">
         <div className="container">
-          <TVOverlay source={bmLogo} title='Black Mirror' />
-          <TVOverlay source={bbLogo} title='Breaking Bad' />
-          <TVOverlay source={dnLogo} title='Death Note' />
+          <TVOverlay id='blackmirror' source={bmLogo} title='Black Mirror' />
+          <TVOverlay id='breakingbad' source={bbLogo} title='Breaking Bad' />
+          <TVOverlay id='deathnote' source={dnLogo} title='Death Note' />
         </div>
         <div className="container">
-          <TVOverlay source={gotLogo} title='Game of Thrones' />
-          <TVOverlay source={wdLogo} title='The Walking Dead' />
-          <TVOverlay source={wireLogo} title='The Wire' />
+          <TVOverlay id='gameofthrones' source={gotLogo} title='Game of Thrones' />
+          <TVOverlay id='thewalkingdead' source={wdLogo} title='The Walking Dead' />
+          <TVOverlay id='thewire' source={wireLogo} title='The Wire' />
         </div>
       </p>
     );
