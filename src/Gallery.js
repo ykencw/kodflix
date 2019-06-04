@@ -14,8 +14,6 @@ function Gallery() {
           <TVOverlay id='blackmirror' source={bmLogo} title='Black Mirror' />
           <TVOverlay id='breakingbad' source={bbLogo} title='Breaking Bad' />
           <TVOverlay id='deathnote' source={dnLogo} title='Death Note' />
-        </div>
-        <div className="container">
           <TVOverlay id='gameofthrones' source={gotLogo} title='Game of Thrones' />
           <TVOverlay id='thewalkingdead' source={wdLogo} title='The Walking Dead' />
           <TVOverlay id='thewire' source={wireLogo} title='The Wire' />

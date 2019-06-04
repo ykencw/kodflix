@@ -3,11 +3,11 @@
 }
 
 .container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
 .item {
-  flex: 1;
   padding: 15px;
   border: 1px solid black;
   position: relative;
@@ -28,10 +28,4 @@
 .item:hover .overlay {
   opacity: 0.6;
   bottom: 0px;
-}
-
-@media only screen and (max-width: 600px) {
-  .container {
-    flex-direction: column;
-  }
 }
