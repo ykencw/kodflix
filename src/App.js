@@ -15,23 +15,41 @@ function App() {
           <div className="container">
             <div className="item">
               <img src={bmLogo} alt="Black Mirror logo" />
+              <div className="overlay">
+                <h1>Black Mirror</h1>
+              </div>
             </div>
             <div className="item">
               <img src={bbLogo} alt="Breaking Bad logo" />
+              <div className="overlay">
+                <h1>Breaking Bad</h1>
+              </div>
             </div>
             <div className="item">
               <img src={dnLogo} alt="Death Note logo" />
+              <div className="overlay">
+                <h1>Death Note</h1>
+              </div>
             </div>
           </div>
           <div className="container">
             <div className="item">
               <img src={gotLogo} alt="Game of Thrones logo" />
+              <div className="overlay">
+                <h1>Game of Thrones</h1>
+              </div>
             </div>
             <div className="item">
               <img src={wdLogo} alt="The Walking Dead logo" />
+              <div className="overlay">
+                <h1>The Walking Dead</h1>
+              </div>
             </div>
             <div className="item">
               <img src={wireLogo} alt="The Wire logo" />
+              <div className="overlay">
+                <h1>The Wire</h1>
+              </div>
             </div>
           </div>
         </p>
