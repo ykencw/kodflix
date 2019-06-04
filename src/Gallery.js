@@ -1,25 +1,24 @@
 import React from 'react';
 import TVOverlay from './TVOverlay';
-import bmLogo from './images/BlackMirror.jpg';
-import bbLogo from './images/BreakingBad.jpg';
-import dnLogo from './images/DeathNote.jpg';
-import gotLogo from './images/GoT.jpg';
-import wdLogo from './images/WalkingDead.jpg';
-import wireLogo from './images/Wire.jpg';
+import getGallery from './gallery-get';
 
 function Gallery() {
     return (
-      <p className="showTitles">
-        <div className="container">
-          <TVOverlay id='blackmirror' source={bmLogo} title='Black Mirror' />
-          <TVOverlay id='breakingbad' source={bbLogo} title='Breaking Bad' />
-          <TVOverlay id='deathnote' source={dnLogo} title='Death Note' />
-          <TVOverlay id='gameofthrones' source={gotLogo} title='Game of Thrones' />
-          <TVOverlay id='thewalkingdead' source={wdLogo} title='The Walking Dead' />
-          <TVOverlay id='thewire' source={wireLogo} title='The Wire' />
+        <div className="showTitles">
+            <div className="container">
+                {
+                    getGallery().map(item => (
+                        <TVOverlay 
+                            key={item.id}
+                            id={item.id} 
+                            source={item.source} 
+                            title={item.title} />
+                    ))
+                }
+            </div>
         </div>
-      </p>
     );
-  }
+}
+
 
 export default Gallery;
