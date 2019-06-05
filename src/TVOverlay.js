@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function TVOverlay(props) {
-    return (<Link to={`/${props.id}`} className='item'>
-        <img src={props.source} alt={`${props.title} logo`} />
+function TVOverlay(movie) {
+    return (<Link to={`/${movie.id}`} className='item'>
+        <img src={movie.source} alt={`${movie.title} logo`} />
         <div className='overlay'>
-            <h1>{props.title}</h1>
+            <h1>{movie.title}</h1>
         </div>
     </Link>);
 }
