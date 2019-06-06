@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import getGallery from './gallery-get';
 
 class Details extends React.Component {
@@ -18,6 +18,9 @@ class Details extends React.Component {
     }
 
     render() {
+        if (!this.state.movie) {
+            return <Redirect to='/not-found' />;
+        }
         return (
             <div>
                 <h1>{this.state.movie.title}</h1>
