@@ -1,3 +1,10 @@
+html body {
+  background: #2f303f;
+  color: white;
+  height: 100%;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
 .App {
   text-align: center;
 }

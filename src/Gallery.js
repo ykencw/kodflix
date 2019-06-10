@@ -12,7 +12,8 @@ function Gallery() {
                             key={item.id}
                             id={item.id} 
                             source={item.source} 
-                            title={item.title} />
+                            title={item.title}
+                            synopsis={item.synopsis} />
                     ))
                 }
             </div>
