@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Gallery from './Gallery';
+import TVSeries from './TVSeries';
 import Details from './Details';
 import NotFound from './NotFound';
 
@@ -13,7 +13,7 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <Switch>
-            <Route exact path='/' component={Gallery} />
+            <Route exact path='/' component={TVSeries} />
             <Route path='/not-found' component={NotFound} />
             <Route exact path='/:details' component={Details} />
           </Switch>

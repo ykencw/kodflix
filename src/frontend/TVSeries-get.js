@@ -5,7 +5,7 @@ import gotLogo from '../images/GoT.jpg';
 import wdLogo from '../images/WalkingDead.jpg';
 import wireLogo from '../images/Wire.jpg';
 
-function getGallery() {
+function getTVSeries() {
     return [
         { id: 'blackmirror', source: bmLogo, title: 'Black Mirror', synopsis: 'Black Mirror is a sci-fi episodic TV series with each episode depicting an alternative timeline, often with a dark and satirical tone.' },
         { id: 'breakingbad', source: bbLogo, title: 'Breaking Bad', synopsis: 'Breaking Bad is a crime drama TV series following the life of high school chemistry teacher Walter White as he deals with terminal cancer; turning to a life of crime by developing methamphetamine.' },
@@ -16,4 +16,4 @@ function getGallery() {
     ];
 }
 
-export default getGallery;
+export default getTVSeries;

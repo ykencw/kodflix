@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import getGallery from './gallery-get';
+import getTVSeries from './TVSeries-get';
 
 import './Details.css';
 
@@ -15,7 +15,7 @@ class Details extends React.Component {
 
     componentDidMount() {
         let detailURL = this.props.match.params.details;
-        let movie = getGallery().find(movie => detailURL === movie.id);
+        let movie = getTVSeries().find(movie => detailURL === movie.id);
         this.setState({ movie });
     }
 
