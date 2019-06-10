@@ -22,9 +22,9 @@ html body {
 }
 
 .overlay {
-  transition: bottom cubic-bezier(0.77, 0.26, 0.36, 0.93) 0.5s;
+  transition: bottom cubic-bezier(0.77, 0.26, 0.36, 0.93) 0.4s;
   position: absolute;
-  bottom: -100px;
+  bottom: -25%;
   left: 0;
   width: 100%;
   background-color: black;
