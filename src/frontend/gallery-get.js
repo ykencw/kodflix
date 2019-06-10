@@ -1,9 +1,9 @@
-import bmLogo from './images/BlackMirror.jpg';
-import bbLogo from './images/BreakingBad.jpg';
-import dnLogo from './images/DeathNote.jpg';
-import gotLogo from './images/GoT.jpg';
-import wdLogo from './images/WalkingDead.jpg';
-import wireLogo from './images/Wire.jpg';
+import bmLogo from '../images/BlackMirror.jpg';
+import bbLogo from '../images/BreakingBad.jpg';
+import dnLogo from '../images/DeathNote.jpg';
+import gotLogo from '../images/GoT.jpg';
+import wdLogo from '../images/WalkingDead.jpg';
+import wireLogo from '../images/Wire.jpg';
 
 function getGallery() {
     return [
