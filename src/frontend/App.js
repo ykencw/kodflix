@@ -9,13 +9,19 @@ import './App.css';
 
 class App extends React.Component {
   render() {
+    fetch(`/rest/tvseries`).then(res => {
+      return res.ok ? res.json() : Promise.reject();
+    }).then(body => {
+      console.log(body);
+    });
+
     return (
       <Router>
         <div className="App">
           <Switch>
             <Route exact path='/' component={TVSeries} />
             <Route path='/not-found' component={NotFound} />
-            <Route exact path='/:details' component={Details} />
+            <Route path='/:details' component={Details} />
           </Switch>
         </div>
       </Router>  
