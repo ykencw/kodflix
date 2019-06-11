@@ -4,17 +4,10 @@ import TVSeries from './TVSeries';
 import Details from './Details';
 import NotFound from './NotFound';
 
-
 import './App.css';
 
 class App extends React.Component {
   render() {
-    fetch(`/rest/tvseries`).then(res => {
-      return res.ok ? res.json() : Promise.reject();
-    }).then(body => {
-      console.log(body);
-    });
-
     return (
       <Router>
         <div className="App">
