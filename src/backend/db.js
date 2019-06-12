@@ -8,9 +8,12 @@ const dbname = url.split('/').pop();
 function connect() {
     return new Promise((resolve, reject) => {
         MongoClient.connect(url, (error, db) => {
-            if (error) reject(error);
-            const dbo = db.db(dbname);
-            resolve(dbo);
+            if (error) {
+                reject(error); 
+            } else {
+                const dbo = db.db(dbname);
+                resolve(dbo);
+            }
         });
     });
 };
