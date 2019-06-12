@@ -11,6 +11,7 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
+          {process.env.NODE_ENV === 'development' ? <div className='Dev'>Development branch view:</div> : <div />}
           <Switch>
             <Route exact path='/' component={TVSeries} />
             <Route path='/not-found' component={NotFound} />
