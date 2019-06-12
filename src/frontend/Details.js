@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import Loading from './Loading';
 
 import './Details.css';
 
@@ -33,7 +34,7 @@ class Details extends React.Component {
                         </div>
                     <Link to='/'><h1>Back to homepage!</h1></Link>
                 </div> :
-                <div>Loading, please wait!</div> :
+                <Loading /> :
             <Redirect to='/not-found' />;
     }
 }
