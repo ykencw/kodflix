@@ -1,0 +1,29 @@
+.loading {
+    border: 20px solid white;
+    border-top: 20px solid #19920f;
+    border-radius: 50%;
+    width: 185px;
+    height: 185px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    align-self: center;
+    animation: spin 1s cubic-bezier(0.2, 0.68, 0.73, 0.44) infinite;
+}
+
+.loadingText {
+    display: inline-block;
+    animation: counterSpin 1s cubic-bezier(0.2, 0.68, 0.73, 0.44) infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* spin the text in the opposite direction to keep it upright */
+@keyframes counterSpin {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
