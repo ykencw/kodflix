@@ -7,7 +7,7 @@ const dbname = url.split('/').pop();
 
 function connect() {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(url, (error, db) => {
+        MongoClient.connect(url, { useNewUrlParser: true }, (error, db) => {
             if (error) {
                 reject(error); 
             } else {
