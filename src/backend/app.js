@@ -7,6 +7,15 @@ const buildPath = '../../build';
 
 const connection = db.connect();
 
+app.get('/rest/tvseries/:series', (req, res) => {
+    connection.then(dbo => {
+        dbo.collection('tvseries').findOne({id: req.params.series}, (error, result) => {
+            if (error) Promise.reject(error);
+            res.send(result);
+        });
+    });
+});
+
 app.get('/rest/tvseries', (_req, res) => {
     connection.then(dbo => {
         dbo.collection('tvseries').find({}).toArray((error, results) => {

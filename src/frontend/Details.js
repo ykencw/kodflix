@@ -14,11 +14,9 @@ class Details extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`/rest/tvseries`).then(res => {
+        fetch(`/rest/tvseries/${this.props.match.params.details}`).then(res => {
             return res.ok ? res.json() : Promise.reject();
-        }).then(dbtvseries => {
-            let detailURL = this.props.match.params.details;
-            let tvseries = dbtvseries.find(movie => detailURL === movie.id);
+        }).then(tvseries => {
             this.setState({tvseries});
         });
     }
