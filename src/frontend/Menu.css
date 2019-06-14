@@ -1,0 +1,31 @@
+.Menu {
+    background: transparent;
+    border-color: transparent;
+    position: fixed;
+    top: 10px;
+    right: 58px;
+    animation: menu-appear cubic-bezier(.68,-0.55,.5,1.50) 1.4s;
+    z-index: 10001;
+}
+
+@keyframes menu-appear {
+    0% {
+        right: -100px;
+        transform: rotate(240deg);
+    }
+    100% {
+        right: 58px;
+        transform: rotate(0deg);
+    }
+}
+
+.Menu, .Menu .icon {
+    width: 42px;
+    height: 42px;
+}
+
+.Menu .icon {
+    padding: 10px;
+    border-radius: 35px;
+    background: rgba(255, 255, 255, 0.6);
+}

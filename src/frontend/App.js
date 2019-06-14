@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import ReactGA from 'react-ga';
 import TVSeries from './TVSeries';
 import Details from './Details';
 import NotFound from './NotFound';
-import ReactGA from 'react-ga';
+import Menu from './Menu';
 
 import './App.css';
 
@@ -20,6 +21,7 @@ class App extends React.Component {
   render() {
     return (
         <div className="App">
+          <Menu />
           {process.env.NODE_ENV === 'development' ? <div className='Dev'>Development branch view:</div> : <div />}
           <Switch>
             <Route exact path='/' component={TVSeries} />
