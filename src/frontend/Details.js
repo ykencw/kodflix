@@ -26,13 +26,18 @@ class Details extends React.Component {
     render() {
         return this.state.tvseries ?
             this.state.tvseries.title ? 
-                <div className='Details'>
-                    <h1>{this.state.tvseries.title}</h1>
-                        <div className='container'>
-                            <div className='synopsis'><h3>Synopsis:</h3>{this.state.tvseries.synopsis}</div>
-                            <img src={require(`./common/images/${this.state.tvseries.id}.jpg`)} alt={`${this.state.tvseries.title} logo`} />
-                        </div>
-                    <Link to='/'><h1>Back to homepage!</h1></Link>
+                <div className='Details' style={
+                    {backgroundImage: `url(${require(`./common/images/wallpapers/${this.state.tvseries.id}.jpg`)})`}
+                }>
+                    <div className='overlay'>
+                        <h1>{this.state.tvseries.title}</h1>
+                            <div className='container'>
+                                <div className='synopsis'><h3>Synopsis:</h3>{this.state.tvseries.synopsis}</div>
+                                {/* <img src={require(`./common/covers/images/${this.state.tvseries.id}.jpg`)} alt={`${this.state.tvseries.title} logo`} /> */}
+
+                            </div>
+                        <Link to='/'><h1>Back to homepage!</h1></Link>
+                    </div>
                 </div> :
                 <Loading /> :
             <Redirect to='/not-found' />;

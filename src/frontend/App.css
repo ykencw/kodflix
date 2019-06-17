@@ -31,7 +31,7 @@ html body {
   overflow: hidden;
 }
 
-.overlay {
+.TVOverlay {
   transition: bottom cubic-bezier(0.77, 0.26, 0.36, 0.93) 0.4s;
   position: absolute;
   bottom: -25%;
@@ -42,7 +42,7 @@ html body {
   opacity: 0.6;
 }
 
-.item:hover .overlay {
+.item:hover .TVOverlay {
   opacity: 0.6;
   bottom: 0px;
 }
