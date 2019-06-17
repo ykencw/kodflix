@@ -18,6 +18,8 @@ class Details extends React.Component {
             return res.ok ? res.json() : Promise.reject();
         }).then(tvseries => {
             this.setState({tvseries});
+        }).catch(() => {
+            this.setState({tvseries: undefined});
         });
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function TVOverlay(movie) {
+const TVOverlay = movie => {
     return (<Link to={`/${movie.id}`} className='item'>
         <img src={require(`./common/images/${movie.id}.jpg`)} alt={`${movie.title} logo`} />
         <div className='overlay'>

@@ -6,7 +6,7 @@
 .Menu {
     position: fixed;
     top: 10px;
-    right: 58px;
+    right: 42px;
     animation: menu-into-screen cubic-bezier(.68,-0.55,.5,1.50) 1s;
     z-index: 1;
 }
@@ -17,7 +17,7 @@
         transform: rotate(240deg);
     }
     100% {
-        right: 58px;
+        right: 42px;
         transform: rotate(0deg);
     }
 }
@@ -30,8 +30,8 @@
 }
 
 .Menu, .Menu #icon {
-    width: 42px;
-    height: 42px;
+    width: 58px;
+    height: 58px;
 }
 
 .Menu #icon {
@@ -67,28 +67,15 @@
     padding-bottom: 31px;
 }
 
+.Menu .title, .Menu .container {
+    font-weight: 550;
+}
+
 .Menu .container {
     display: flex;
     row-gap: 10px;
     padding: 10px;
     flex-direction: column;
-}
-
-.Menu .container .item {
-    border: 1px solid rgba(255, 255, 255, 0.219);
-    transition: background-color cubic-bezier(.26,.15,.46,1) 0.35s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.Menu .container .item:hover {
-    background: rgba(77, 169, 255, 0.5);
-    border: 1px solid white;
-}
-
-.Menu .container .item .itemName {
-    margin-left: 6px;
 }
 
 @keyframes menu-open {

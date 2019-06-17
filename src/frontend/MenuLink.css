@@ -1,0 +1,16 @@
+.MenuLink {
+    border: 1px solid rgba(255, 255, 255, 0.219);
+    transition: background-color cubic-bezier(.26,.15,.46,1) 0.35s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.MenuLink:hover {
+    background: rgba(77, 169, 255, 0.5);
+    border: 1px solid white;
+}
+
+.MenuLink .linkName {
+    margin-left: 6px;
+}
