@@ -6,6 +6,7 @@ import Details from './Details';
 import NotFound from './NotFound';
 import Menu from './Menu';
 import ManageTVSeries from './ManageTVSeries';
+import DevOverlay from './DevOverlay';
 
 import './App.css';
 
@@ -23,7 +24,7 @@ class App extends React.Component {
     return (
         <div className="App">
           <Menu />
-          {process.env.NODE_ENV === 'development' ? <div className='Dev'>Development branch view:</div> : <div />}
+          {process.env.NODE_ENV === 'development' ? <DevOverlay /> : <div />}
           <Switch>
             <Route exact path='/' component={TVSeries} />
             <Route path='/not-found' component={NotFound} />

@@ -8,18 +8,6 @@ html, body, .App, #root, .showTitles {
   overflow: auto;
 }
 
-.Dev {
-  position: fixed;
-  opacity: 0.6;
-  left: 50px;
-  top: 50px;
-  padding: 20px;
-  font-size: 16px;
-  border: 1px solid white;
-  background: black;
-  z-index: 10001;
-}
-
 html body {
   background: #2f303f;
   color: white;
