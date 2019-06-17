@@ -1,3 +1,8 @@
+.Menu a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .Menu {
     position: fixed;
     top: 10px;
@@ -24,12 +29,12 @@
     z-index: 2;
 }
 
-.Menu, .Menu .icon {
+.Menu, .Menu #icon {
     width: 42px;
     height: 42px;
 }
 
-.Menu .icon {
+.Menu #icon {
     padding: 10px;
     border-radius: 35px;
     background: rgba(255, 255, 255, 0.6);
@@ -64,18 +69,26 @@
 
 .Menu .container {
     display: flex;
+    row-gap: 10px;
     padding: 10px;
     flex-direction: column;
 }
 
 .Menu .container .item {
     border: 1px solid rgba(255, 255, 255, 0.219);
-    margin: 10px;
+    transition: background-color cubic-bezier(.26,.15,.46,1) 0.35s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .Menu .container .item:hover {
     background: rgba(77, 169, 255, 0.5);
     border: 1px solid white;
+}
+
+.Menu .container .item .itemName {
+    margin-left: 6px;
 }
 
 @keyframes menu-open {

@@ -5,6 +5,7 @@ import TVSeries from './TVSeries';
 import Details from './Details';
 import NotFound from './NotFound';
 import Menu from './Menu';
+import ManageTVSeries from './ManageTVSeries';
 
 import './App.css';
 
@@ -26,6 +27,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={TVSeries} />
             <Route path='/not-found' component={NotFound} />
+            <Route path='/manage/tvseries' component={ManageTVSeries} />
             <Route path='/:details' component={Details} />
           </Switch>
         </div>
