@@ -5,7 +5,6 @@ import Loading from './Loading';
 import './Details.css';
 
 class Details extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -26,22 +25,25 @@ class Details extends React.Component {
     render() {
         return this.state.tvseries ?
             this.state.tvseries.title ? 
-                <div className='Details' style={
-                    {backgroundImage: `url(${require(`./common/images/wallpapers/${this.state.tvseries.id}.jpg`)})`}
-                }>
-                    <div className='overlay'>
-                        <h1>{this.state.tvseries.title}</h1>
-                            <div className='container'>
-                                <div className='synopsis'><h3>Synopsis:</h3>{this.state.tvseries.synopsis}</div>
-                                {/* <img src={require(`./common/covers/images/${this.state.tvseries.id}.jpg`)} alt={`${this.state.tvseries.title} logo`} /> */}
-
-                            </div>
-                        <Link to='/'><h1>Back to homepage!</h1></Link>
-                    </div>
-                </div> :
+                <DetailsPage tvseries={this.state.tvseries} /> :
                 <Loading /> :
             <Redirect to='/not-found' />;
     }
+}
+
+const DetailsPage = ({tvseries}) => {
+    return (<div className='Details' style={
+        {backgroundImage: `url(${require(`./common/images/wallpapers/${tvseries.id}.jpg`)})`}
+    }>
+        <div className='overlay'>
+            <h1>{tvseries.title}</h1>
+                <div className='container'>
+                    <div className='synopsis'><h3>Synopsis:</h3>{tvseries.synopsis}</div>
+                </div>
+            <Link to={`${tvseries.id}/play`}><h2>Click to watch the Trailer!</h2></Link>
+            <Link to='/'><h1>Back to homepage!</h1></Link>
+        </div>
+    </div>);
 }
 
 export default Details;
