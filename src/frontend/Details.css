@@ -33,3 +33,7 @@
   text-align: left;
   font-size: 2rem;
 }
+
+.Details h4 {
+  margin: 5px;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Loading from './Loading';
+import PlayButton from './PlayButton';
 
 import './Details.css';
 
@@ -23,9 +24,10 @@ class Details extends React.Component {
     }
 
     render() {
-        return this.state.tvseries ?
-            this.state.tvseries.title ? 
-                <DetailsPage tvseries={this.state.tvseries} /> :
+        const { tvseries } = this.state;
+        return tvseries ?
+            tvseries.title ? 
+                <DetailsPage tvseries={tvseries} /> :
                 <Loading /> :
             <Redirect to='/not-found' />;
     }
@@ -40,7 +42,10 @@ const DetailsPage = ({tvseries}) => {
                 <div className='container'>
                     <div className='synopsis'><h3>Synopsis:</h3>{tvseries.synopsis}</div>
                 </div>
-            <Link to={`${tvseries.id}/play`}><h2>Click to watch the Trailer!</h2></Link>
+            <h4>Watch the trailer:</h4>
+            <Link to={`${tvseries.id}/play`}>
+                <PlayButton />
+            </Link>
             <Link to='/'><h1>Back to homepage!</h1></Link>
         </div>
     </div>);
