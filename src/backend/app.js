@@ -9,10 +9,12 @@ const connection = db.connect();
 
 app.get('/rest/tvseries/:series', (req, res) => {
     connection.then(dbo => {
-        dbo.collection('tvseries').findOne({id: req.params.series}, (error, result) => {
-            if (error) Promise.reject(error);
-            res.send(result);
-        });
+        dbo.collection('tvseries').findOne({ id: req.params.series },
+            (error, result) => {
+                if (error) Promise.reject(error);
+                res.send(result);
+            }
+        );
     });
 });
 

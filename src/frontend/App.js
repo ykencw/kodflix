@@ -15,25 +15,26 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     ReactGA.initialize('UA-142077231-1');
-    ReactGA.pageview(this.props.location.pathname + this.props.location.search + this.props.location.hash);
-    this.props.history.listen((location) => {
-      ReactGA.pageview(location.pathname + location.search + location.hash);
+    const { location } = this.props;
+    ReactGA.pageview(location.pathname + location.search + location.hash);
+    this.props.history.listen((loc) => {
+      ReactGA.pageview(loc.pathname + loc.search + loc.hash);
     });
   }
 
   render() {
     return (
-        <div className="App">
-          <Menu />
-          {process.env.NODE_ENV === 'development' ? <DevOverlay /> : <div />}
-          <Switch>
-            <Route exact path='/' component={TVSeries} />
-            <Route path='/not-found' component={NotFound} />
-            <Route path='/manage/tvseries' component={ManageTVSeries} />
-            <Route path='/:tvseriesID/play' component={Play} />
-            <Route path='/:details' component={Details} />
-          </Switch>
-        </div>
+      <div className="App">
+        <Menu />
+        {process.env.NODE_ENV === 'development' ? <DevOverlay /> : <div />}
+        <Switch>
+          <Route exact path='/' component={TVSeries} />
+          <Route path='/not-found' component={NotFound} />
+          <Route path='/manage/tvseries' component={ManageTVSeries} />
+          <Route path='/:tvseriesID/play' component={Play} />
+          <Route path='/:details' component={Details} />
+        </Switch>
+      </div>
     );
   }
 }

@@ -9,32 +9,35 @@ class Play extends React.Component {
             tvseries: {}
         };
     }
-    
+
     componentDidMount() {
-        fetch(`/rest/tvseries/${this.props.match.params.tvseriesID}`).then(res => {
+        fetch(`/rest/tvseries/${this.props.match.params.tvseriesID}`
+        ).then(res => {
             return res.ok ? res.json() : Promise.reject();
         }).then(tvseries => {
-            this.setState({tvseries});
+            this.setState({ tvseries });
         }).catch(() => {
-            this.setState({tvseries: undefined});
+            this.setState({ tvseries: undefined });
         });
     }
 
     render() {
-        return this.state.tvseries ?
-        this.state.tvseries.title ? 
-            <PlayPage tvseries={this.state.tvseries} /> :
-            <Loading /> :
-        <Redirect to='/not-found' />;
+        const { tvseries } = this.state;
+        return tvseries ?
+            tvseries.title ?
+                <PlayPage tvseries={tvseries} /> :
+                <Loading /> :
+            <Redirect to='/not-found' />;
     }
 }
 
-const PlayPage = ({tvseries}) => {
-    return(<iframe 
+const PlayPage = ({ tvseries }) => {
+    return (<iframe
         title={tvseries.title}
         width='100%'
         height='100%'
-        src={`https://www.youtube.com/embed/${tvseries.videoID}?autoplay=1&mute=1`}
+        src={`https://www.youtube.com/embed/${
+            tvseries.videoID}?autoplay=1&mute=1`}
     />);
 }
 

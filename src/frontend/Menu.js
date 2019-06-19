@@ -19,17 +19,25 @@ class Menu extends React.Component {
     }
 
     render() {
-        return (
-        <div className={`Menu ${this.state.isOpen ? 'is-visible' : ''}`}>
+        return (<div className={
+            `Menu ${this.state.isOpen ? 'is-visible' : ''}`}>
             <button onClick={this.toggleMenuOpen}>
-                <img id='icon' src={require(`./common/images/menuicon.svg`)} alt='menu icon'></img>
+                <img id='icon'
+                    src={require(`./common/images/menuicon.svg`)}
+                    alt='menu icon' />
             </button>
             <div className='panel'>
                 <div className='dimmer' onClick={this.toggleMenuOpen} />
                 <div className='bar'><div className='title'>Hello menu!</div>
                     <div className='container'>
-                        <MenuLink route='/' iconName='homeicon' linkName='Home' clickHandler={this.toggleMenuOpen} />
-                        <MenuLink route='/manage/tvseries' iconName='tvicon' linkName='Manage TVSeries' clickHandler={this.toggleMenuOpen} />
+                        <MenuLink route='/'
+                            iconName='homeicon'
+                            linkName='Home'
+                            clickHandler={this.toggleMenuOpen} />
+                        <MenuLink route='/manage/tvseries'
+                            iconName='tvicon'
+                            linkName='Manage TVSeries'
+                            clickHandler={this.toggleMenuOpen} />
                         <div className='item'>Faux Option 3</div>
                         <div className='item'>Faux Option 4</div>
                         <div className='item'>Faux Option 5</div>

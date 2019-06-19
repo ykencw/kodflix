@@ -17,31 +17,35 @@ class Details extends React.Component {
         fetch(`/rest/tvseries/${this.props.match.params.details}`).then(res => {
             return res.ok ? res.json() : Promise.reject();
         }).then(tvseries => {
-            this.setState({tvseries});
+            this.setState({ tvseries });
         }).catch(() => {
-            this.setState({tvseries: undefined});
+            this.setState({ tvseries: undefined });
         });
     }
 
     render() {
         const { tvseries } = this.state;
         return tvseries ?
-            tvseries.title ? 
+            tvseries.title ?
                 <DetailsPage tvseries={tvseries} /> :
                 <Loading /> :
             <Redirect to='/not-found' />;
     }
 }
 
-const DetailsPage = ({tvseries}) => {
-    return (<div className='Details' style={
-        {backgroundImage: `url(${require(`./common/images/wallpapers/${tvseries.id}.jpg`)})`}
-    }>
+const DetailsPage = ({ tvseries }) => {
+    return (<div
+        className='Details'
+        style={{backgroundImage:
+            `url(${require(`./common/images/wallpapers/${tvseries.id}.jpg`)})`}
+        }>
         <div className='overlay'>
             <h1>{tvseries.title}</h1>
-                <div className='container'>
-                    <div className='synopsis'><h3>Synopsis:</h3>{tvseries.synopsis}</div>
+            <div className='container'>
+                <div className='synopsis'>
+                    <h3>Synopsis:</h3>{tvseries.synopsis}
                 </div>
+            </div>
             <h4>Watch the trailer:</h4>
             <Link to={`${tvseries.id}/play`}>
                 <PlayButton />
