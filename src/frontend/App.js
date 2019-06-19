@@ -1,12 +1,12 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import TVSeries from './TVSeries';
 import Details from './Details';
 import Play from './Play';
 import NotFound from './NotFound';
 import Menu from './Menu';
-import ManageTVSeries from './ManageTVSeries';
+import Admin from './admin/Admin';
 import DevOverlay from './DevOverlay';
 
 import './App.css';
@@ -29,10 +29,11 @@ class App extends React.Component {
         {process.env.NODE_ENV === 'development' ? <DevOverlay /> : <div />}
         <Switch>
           <Route exact path='/' component={TVSeries} />
-          <Route path='/not-found' component={NotFound} />
-          <Route path='/manage/tvseries' component={ManageTVSeries} />
-          <Route path='/:tvseriesID/play' component={Play} />
-          <Route path='/:details' component={Details} />
+          <Route exact path='/not-found' component={NotFound} />
+          <Route path='/admin/tvseries' component={Admin} />
+          <Route exact path='/:tvseriesID/play' component={Play} />
+          <Route exact path='/:details' component={Details} />
+          <Route render={() => <Redirect to='/not-found' /> } />
         </Switch>
       </div>
     );
