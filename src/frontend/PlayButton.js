@@ -2,8 +2,6 @@ import React from 'react';
 
 import './PlayButton.css';
 
-const PlayButton = () => {
+export default function PlayButton() {
     return <button class='PlayButton'></button>;
 }
-
-export default PlayButton;

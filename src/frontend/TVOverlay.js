@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const TVOverlay = tvseries => {
+export default function TVOverlay(tvseries) {
     return (<Link to={`/${tvseries.id}`} className='item'>
         <img src={require(`./common/images/covers/${tvseries.id}.jpg`)}
             alt={`${tvseries.title} logo`} />
@@ -10,5 +10,3 @@ const TVOverlay = tvseries => {
         </div>
     </Link>);
 }
-
-export default TVOverlay;
