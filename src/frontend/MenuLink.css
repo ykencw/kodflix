@@ -1,6 +1,6 @@
 .MenuLink {
     border: 1px solid rgba(255, 255, 255, 0.219);
-    transition: background-color cubic-bezier(.26,.15,.46,1) 0.35s;
+    transition: background-color cubic-bezier(0.26, 0.15, 0.46, 1) 0.35s;
     display: flex;
     align-items: center;
     justify-content: center;

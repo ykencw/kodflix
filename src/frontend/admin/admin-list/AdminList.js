@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Loading from '../../Loading';
 
 import './AdminList.css';
@@ -22,34 +22,40 @@ export default class AdminList extends React.Component {
 
     render() {
         const { tvshows } = this.state;
+        debugger;
         return tvshows ?
             tvshows[0] ?
-                <AdminListPage tvshows={tvshows}/> :
+                <AdminListPage tvshows={tvshows}
+                    adminAddLink={`${
+                        this.props.match.path.replace(
+                            new RegExp("(.*/)[^/]+$"), '$1')
+                        }add`}
+                /> :
                 <Loading /> :
             <Redirect to='/not-found' />;
     }
 }
 
-const AdminListPage = ({tvshows}) => {
+const AdminListPage = ({ tvshows, adminAddLink }) => {
     return <div className='AdminList'>
         <div className='Header'>
             <h4>TVShows Database:</h4>
             <div className='ViewingCount'>
                 {`Viewing ${0}-${tvshows.length} of ${tvshows.length}`}
             </div>
-            <button className='AddTVShow'>
+            <Link className='AddTVShow' to={adminAddLink}>
                 <div>Add TVShow</div>
                 <img className='icon'
                     src={require(`../../common/images/addicon.svg`)}
                     alt={'Edit icon'} />
-            </button>
+            </Link>
         </div>
         <TVList tvshows={tvshows} />
     </div>
 }
 
-const TVList = ({tvshows}) => {
-    return (<table className='TVList'>
+const TVList = ({ tvshows }) => {
+    return (<table className='TVList'><tbody>
         <tr>
             {
                 Object.keys(tvshows[0]).map((k, i) => {
@@ -80,5 +86,5 @@ const TVList = ({tvshows}) => {
                 </tr>);
             })
         }
-    </table>);
+    </tbody></table>);
 }
