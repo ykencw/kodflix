@@ -34,6 +34,9 @@ const AdminListPage = ({tvshows}) => {
     return <div className='AdminList'>
         <div className='Header'>
             <h4>TVShows Database:</h4>
+            <div className='ViewingCount'>
+                {`Viewing ${0}-${tvshows.length} of ${tvshows.length}`}
+            </div>
             <button className='AddTVShow'>
                 <div>Add TVShow</div>
                 <img className='icon'
