@@ -6,38 +6,38 @@ class Play extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tvseries: {}
+            tvshows: {}
         };
     }
 
     componentDidMount() {
-        fetch(`/rest/tvseries/${this.props.match.params.tvseriesID}`
+        fetch(`/rest/tvshows/${this.props.match.params.tvshowsID}`
         ).then(res => {
             return res.ok ? res.json() : Promise.reject();
-        }).then(tvseries => {
-            this.setState({ tvseries });
+        }).then(tvshows => {
+            this.setState({ tvshows });
         }).catch(() => {
-            this.setState({ tvseries: undefined });
+            this.setState({ tvshows: undefined });
         });
     }
 
     render() {
-        const { tvseries } = this.state;
-        return tvseries ?
-            tvseries.title ?
-                <PlayPage tvseries={tvseries} /> :
+        const { tvshows } = this.state;
+        return tvshows ?
+            tvshows.title ?
+                <PlayPage tvshows={tvshows} /> :
                 <Loading /> :
             <Redirect to='/not-found' />;
     }
 }
 
-const PlayPage = ({ tvseries }) => {
+const PlayPage = ({ tvshows }) => {
     return (<iframe
-        title={tvseries.title}
+        title={tvshows.title}
         width='100%'
         height='100%'
         src={`https://www.youtube.com/embed/${
-            tvseries.videoID}?autoplay=1&mute=1`}
+            tvshows.videoID}?autoplay=1&mute=1`}
     />);
 }
 

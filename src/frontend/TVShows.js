@@ -3,29 +3,30 @@ import TVOverlay from './TVOverlay';
 import { Redirect } from 'react-router-dom';
 import Loading from './Loading';
 
-class TVSeries extends React.Component {
+class TVShows extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tvseries: []
+            tvshows: []
         };
     }
 
     componentDidMount() {
-        fetch(`/rest/tvseries`).then(res => {
+        fetch(`/rest/tvshows`).then(res => {
             return res.ok ? res.json() : Promise.reject();
-        }).then(tvseries => {
-            this.setState({tvseries});
+        }).then(tvshows => {
+            this.setState({tvshows});
         });
     }
 
     render() {
-        return this.state.tvseries ?
-            this.state.tvseries[0] ?
+        const { tvshows } = this.state;
+        return tvshows ?
+            tvshows[0] ?
                 <div className="showTitles">
                     <div className="container">
                         {
-                            this.state.tvseries.map(item => (
+                            tvshows.map(item => (
                                 <TVOverlay 
                                     key={item.id}
                                     id={item.id} 
@@ -41,4 +42,4 @@ class TVSeries extends React.Component {
 }
 
 
-export default TVSeries;
+export default TVShows;

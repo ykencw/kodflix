@@ -34,9 +34,9 @@ class Menu extends React.Component {
                             iconName='homeicon'
                             linkName='Home'
                             clickHandler={this.toggleMenuOpen} />
-                        <MenuLink route='/admin/tvseries/list'
+                        <MenuLink route='/admin/tvshows/list'
                             iconName='tvicon'
-                            linkName='Admin TVSeries'
+                            linkName='Admin TVShows'
                             clickHandler={this.toggleMenuOpen} />
                         <div className='item'>Faux Option 3</div>
                         <div className='item'>Faux Option 4</div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import ReactGA from 'react-ga';
-import TVSeries from './TVSeries';
+import TVShows from './TVShows';
 import Details from './Details';
 import Play from './Play';
 import NotFound from './NotFound';
@@ -28,10 +28,10 @@ class App extends React.Component {
         <Menu />
         {process.env.NODE_ENV === 'development' ? <DevOverlay /> : <div />}
         <Switch>
-          <Route exact path='/' component={TVSeries} />
+          <Route exact path='/' component={TVShows} />
           <Route exact path='/not-found' component={NotFound} />
-          <Route path='/admin/tvseries' component={Admin} />
-          <Route exact path='/:tvseriesID/play' component={Play} />
+          <Route path='/admin/tvshows' component={Admin} />
+          <Route exact path='/:tvshowsID/play' component={Play} />
           <Route exact path='/:details' component={Details} />
           <Route render={() => <Redirect to='/not-found' /> } />
         </Switch>

@@ -1,0 +1,54 @@
+.AdminList {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.AdminList .Header {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.AdminList h4 {
+    text-align: left;
+    padding-left: 3%;
+}
+
+.AdminList .AddTVShow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    font-size: 16px;
+    color: white;
+    padding: 5px;
+    margin-top: 2em;
+    cursor: pointer;
+}
+
+.AdminList .AddTVShow .icon {
+    padding-left: 0.5em;
+}
+
+.AdminList .TVList {
+    border-collapse: collapse;
+}
+
+.AdminList .TVList th {
+    padding: 1em 1em;
+    color: cyan;
+}
+
+.AdminList .TVList td {
+    padding: 0em 1em;
+}
+
+.AdminList .TVList tr:nth-child(odd) {
+    background: rgba(39, 58, 82, 0.2);
+}
+
+.AdminList .TVList th, .AdminList .TVList td {
+    border: 1px solid white;
+}
+
+.AdminList .Edit, .AdminList .Delete {
+    cursor: pointer;
+}

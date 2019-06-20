@@ -7,9 +7,9 @@ const buildPath = '../../build';
 
 const connection = db.connect();
 
-app.get('/rest/tvseries/:series', (req, res) => {
+app.get('/rest/tvshows/:show', (req, res) => {
     connection.then(dbo => {
-        dbo.collection('tvseries').findOne({ id: req.params.series },
+        dbo.collection('tvshows').findOne({ id: req.params.show },
             (error, result) => {
                 if (error) Promise.reject(error);
                 res.send(result);
@@ -18,9 +18,9 @@ app.get('/rest/tvseries/:series', (req, res) => {
     });
 });
 
-app.get('/rest/tvseries', (_req, res) => {
+app.get('/rest/tvshows', (_req, res) => {
     connection.then(dbo => {
-        dbo.collection('tvseries').find({}).toArray((error, results) => {
+        dbo.collection('tvshows').find({}).toArray((error, results) => {
             if (error) Promise.reject(error);
             res.send(results);
         });

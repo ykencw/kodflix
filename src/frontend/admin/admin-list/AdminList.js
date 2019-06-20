@@ -1,5 +1,81 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+import Loading from '../../Loading';
 
-export default function AdminList() {
-    return(<>This is the Admin list page</>);
+import './AdminList.css';
+
+export default class AdminList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tvshows: []
+        };
+    }
+
+    componentDidMount() {
+        fetch(`/rest/tvshows`).then(res => {
+            return res.ok ? res.json() : Promise.reject();
+        }).then(tvshows => {
+            this.setState({ tvshows });
+        });
+    }
+
+    render() {
+        const { tvshows } = this.state;
+        return tvshows ?
+            tvshows[0] ?
+                <AdminListPage tvshows={tvshows}/> :
+                <Loading /> :
+            <Redirect to='/not-found' />;
+    }
+}
+
+const AdminListPage = ({tvshows}) => {
+    return <div className='AdminList'>
+        <div className='Header'>
+            <h4>TVShows Database:</h4>
+            <button className='AddTVShow'>
+                <div>Add TVShow</div>
+                <img className='icon'
+                    src={require(`../../common/images/addicon.svg`)}
+                    alt={'Edit icon'} />
+            </button>
+        </div>
+        <TVList tvshows={tvshows} />
+    </div>
+}
+
+const TVList = ({tvshows}) => {
+    return (<table className='TVList'>
+        <tr>
+            {
+                Object.keys(tvshows[0]).map((k, i) => {
+                    return <th key={i}>{k}</th>;
+                })
+            }
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {
+            tvshows.map((tvshow, i) => {
+                return (<tr key={i}>
+                    {
+                        Object.values(tvshow).map((v, i) => {
+                            return <td key={i}>{v}</td>;
+                        })
+                    }
+                    <td>
+                        <img className='Edit icon'
+                            src={require(`../../common/images/editicon.svg`)}
+                            alt={'Edit icon'} />
+                    </td>
+                    <td>
+                        <img className='Delete icon'
+                            src={require(`../../common/images/deleteicon.svg`)}
+                            alt={'Delete icon'} />
+                    </td>
+                </tr>);
+            })
+        }
+    </table>);
 }
