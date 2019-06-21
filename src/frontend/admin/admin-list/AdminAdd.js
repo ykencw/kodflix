@@ -82,7 +82,7 @@ export default class AdminAdd extends React.Component {
 
 const InputField = ({name, required, wantsImage, placeholder, handle}) => {
     return(<>
-        <label for={name}>
+        <label htmlFor={name}>
             {required ? <Asterisk /> : <></>}
             {name}:
         </label>

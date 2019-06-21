@@ -7,6 +7,7 @@ import Play from './Play';
 import NotFound from './NotFound';
 import Menu from './Menu';
 import Admin from './admin/Admin';
+import Login from './Login';
 import DevOverlay from './DevOverlay';
 
 import './App.css';
@@ -30,6 +31,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={TVShows} />
           <Route exact path='/not-found' component={NotFound} />
+          <Route exact path='/login' component={Login} />
           <Route path='/admin/tvshows' component={Admin} />
           <Route exact path='/:tvshowsID/play' component={Play} />
           <Route exact path='/:details' component={Details} />
