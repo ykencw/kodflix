@@ -1,4 +1,4 @@
-.AdminAdd fieldset {
+.AdminAdd .Fields {
     display: grid;
     justify-content: stretch;
     justify-items: start;
