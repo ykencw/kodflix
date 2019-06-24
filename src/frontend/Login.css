@@ -1,0 +1,21 @@
+.Login form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0% 10%;
+    grid-template-areas: ". ."
+    ". ." "submit submit";
+    grid-gap: 10px;
+}
+
+.Login form label {
+    justify-self: end;
+}
+
+.Login form input {
+    justify-self: start;
+}
+
+.Login form input[type=submit] {
+    grid-area: submit;
+    justify-self: center;
+}

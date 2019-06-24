@@ -1,6 +1,8 @@
 const express = require('express');
 const db = require('./db');
 const path = require('path');
+const bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
 const app = express();
 const port = process.env.PORT || 3001;
 const buildPath = '../../build';
@@ -25,6 +27,10 @@ app.get('/rest/tvshows', (_req, res) => {
             res.send(results);
         });
     });
+});
+
+app.post('/login', jsonParser, (req, res) => {
+    res.send('test, username: ' + req.body.username + " password: " + req.body.password);
 });
 
 app.use(express.static(path.join(__dirname, buildPath)));
