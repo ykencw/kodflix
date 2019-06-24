@@ -1,0 +1,31 @@
+.AdminAdd fieldset {
+    display: grid;
+    justify-content: stretch;
+    justify-items: start;
+    grid-template-columns: 1fr 10fr;
+}
+
+.AdminAdd label {
+    justify-self: end;
+    padding-right: 0.5em;
+}
+
+.AdminAdd input[type=text] {
+    width: 100%;
+}
+
+.AdminAdd .Asterisk {
+    width: 0.7em;
+    top: 0px;
+    vertical-align: top;
+    padding-right: 3px;
+}
+
+.AdminAdd form {
+    display: grid;
+}
+
+.AdminAdd .Required {
+    justify-self: start;
+    padding: 0.5em;
+}

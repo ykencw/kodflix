@@ -25,25 +25,20 @@ export default class AdminList extends React.Component {
         debugger;
         return tvshows ?
             tvshows[0] ?
-                <AdminListPage tvshows={tvshows}
-                    adminAddLink={`${
-                        this.props.match.path.replace(
-                            new RegExp("(.*/)[^/]+$"), '$1')
-                        }add`}
-                /> :
+                <AdminListPage tvshows={tvshows}/> :
                 <Loading /> :
             <Redirect to='/not-found' />;
     }
 }
 
-const AdminListPage = ({ tvshows, adminAddLink }) => {
+const AdminListPage = ({ tvshows }) => {
     return <div className='AdminList'>
         <div className='Header'>
             <h4>TVShows Database:</h4>
             <div className='ViewingCount'>
                 {`Viewing ${0}-${tvshows.length} of ${tvshows.length}`}
             </div>
-            <Link className='AddTVShow' to={adminAddLink}>
+            <Link className='AddTVShow' to='./add'>
                 <div>Add TVShow</div>
                 <img className='icon'
                     src={require(`../../common/images/addicon.svg`)}

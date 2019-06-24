@@ -19,7 +19,7 @@
     "start-backend": "nodemon ./src/backend/app.js",
     "start-frontend": "react-scripts start",
     "start": "npm-run-all -s build start-backend",
-    "start-dev": "set NODE_ENV=development&& npm-run-all -p start-db start-backend start-frontend",
+    "start-dev": "cross-env NODE_ENV=development npm-run-all -p start-db start-backend start-frontend",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -39,5 +39,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "devDependencies": {
+    "cross-env": "^5.2.0"
+  }
 }
