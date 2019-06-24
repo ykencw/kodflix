@@ -31,7 +31,7 @@ app.get('/rest/tvshows', (_req, res) => {
 
 app.post('/login', jsonParser, (req, res) => {
     res.send('test, username: ' + req.body.username + " password: " + req.body.password);
-})
+});
 
 app.use(express.static(path.join(__dirname, buildPath)));
 app.get('*', (_req, res) => {
