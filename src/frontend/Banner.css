@@ -7,9 +7,16 @@
     font-size: 25px;
     font-weight: 600;
     padding: 15px 0px 5px 0px;
-    background: rgba(0, 151, 20, 0.6);
     animation: Banner ease 3s;
     animation-fill-mode: forwards;
+}
+
+.Banner.Success {
+    background: rgba(0, 151, 20, 0.6);
+}
+
+.Banner.Fail {
+    background: rgba(151, 0, 0, 0.6);
 }
 
 @keyframes Banner {

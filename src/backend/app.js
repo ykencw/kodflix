@@ -56,12 +56,18 @@ app.post('/login', jsonParser, (req, response) => {
                                 message: 'Successful login!',
                                 username
                             }));
-                        } else {
-                            response.end(JSON.stringify({ result: 'Invalid password!' }));
+                        } else { // Invalid Password
+                            response.end(JSON.stringify({
+                                result: false,
+                                message: 'Invalid login details'
+                            }));
                         }
                     });
-                } else {
-                    response.end(JSON.stringify({ result: 'Could not find user!' }));
+                } else { // User could not be found
+                    response.end(JSON.stringify({
+                        result: false,
+                        message: 'Invalid login details'
+                    }));
                 }
             }
         );
