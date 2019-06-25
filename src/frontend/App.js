@@ -27,7 +27,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Menu />
-        {process.env.NODE_ENV === 'development' ? <DevOverlay /> : <div />}
+        {process.env.NODE_ENV === 'development' ? <DevOverlay /> : <></>}
         <Switch>
           <Route exact path='/' component={TVShows} />
           <Route exact path='/not-found' component={NotFound} />

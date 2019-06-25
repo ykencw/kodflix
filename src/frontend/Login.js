@@ -1,5 +1,5 @@
 import React from 'react';
-import sha256 from 'crypto-js/sha256';
+import * as forge from 'node-forge';
 
 import './Login.css';
 
@@ -19,21 +19,25 @@ export default class Login extends React.Component {
 
     handlePassword = event => {
         const input = event.target.value;
-        console.log(`password input: ${input} sha: ${sha256(input)}`);
+        const md = forge.md.sha256.create();
+        md.update(input);
+        console.log(`password input: ${input} sha: ${md.digest().toHex()}`);
         this.setState(() => ({ password: input }));
     }
 
     handleSubmit = event => {
         event.preventDefault();
+        const md = forge.md.sha256.create();
+        md.update(this.state.password);
         fetch(`/login`, {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
                 username: this.state.username,
-                password: sha256(this.state.password)
+                password: md.digest().toHex()
             })
-        }).then(res => res.ok ? res : Promise.reject())
-        .then(res => console.log("Result: " + res))
+        }).then(res => res.ok ? res.json() : Promise.reject())
+        .then(res => console.log("Result: " + Object.entries(res)))
         .catch();
     }
 

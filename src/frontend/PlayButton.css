@@ -10,6 +10,7 @@
     border-color: transparent transparent transparent rgb(210, 210, 225);
     background: transparent;
     transition: cubic-bezier(.17,.84,.44,1) 0.5s;
+    transition-property: width height margin border-width border-color;
 }
 
 .PlayButton:hover {

@@ -33,6 +33,7 @@
     margin-top: 2em;
     cursor: pointer;
     transition: cubic-bezier(0.26, 0.15, 0.46, 1) 0.25s;
+    transition-property: border-color color background;
 }
 
 .AdminList .AddTVShow:hover {
