@@ -1,9 +1,10 @@
 import React from 'react';
 import * as forge from 'node-forge';
+import { withRouter } from 'react-router-dom';
 
 import './Login.css';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,14 +32,22 @@ export default class Login extends React.Component {
         md.update(this.state.password);
         fetch(`/login`, {
             method: 'post',
-            headers: {'Content-Type':'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 username: this.state.username,
                 password: md.digest().toHex()
             })
         }).then(res => res.ok ? res.json() : Promise.reject())
-        .then(res => console.log("Result: " + Object.entries(res)))
-        .catch();
+            .then(res => {
+                console.log("Result: " + Object.entries(res));
+                if (res.result) { // Successful Login
+                    this.props.showSuccessfulLogin(res.username);
+                    // this.props.history.push('/');
+                } else { // Fail with message from backend
+                    
+                }
+            })
+            .catch();
     }
 
     render() {
@@ -58,3 +67,5 @@ export default class Login extends React.Component {
         </div>);
     }
 }
+
+export default withRouter(Login);

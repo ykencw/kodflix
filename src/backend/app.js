@@ -17,46 +17,55 @@ const connection = db.connect();
 
 connection.then(dbo => {
     const users = dbo.collection('users');
-    // Check if Admin exists:
-    users.findOne({ name: 'Admin' },
-        (error, result) => {
-            if (error) Promise.reject(error);
-            // If Admin does not exist, create Admin
-            if (!result) {
-                let md = forge.md.sha256.create();
-                md.update(DB_ADMIN_PWD);
-                const password = md.digest().toHex();
-                bcrypt.hash(password, SALT_ROUNDS).then(hpw => {
-                    users.insertOne({ name: 'Admin', password: hpw });
-                });
-            }
-        }
-    );
+    // Create Admin account (or update if one already exists)
+    let md = forge.md.sha256.create();
+    md.update(DB_ADMIN_PWD);
+    const password = md.digest().toHex();
+    bcrypt.hash(password, SALT_ROUNDS).then(hashedPassword => {
+        users.updateOne(
+            { username: 'Admin' },
+            { $set: {
+                password: hashedPassword,
+                isAdmin: true
+            }},
+            { upsert: true }
+        );
+    });
 });
 
-// Test if password received matches the Admin's password:
+// Validate user logins
 app.post('/login', jsonParser, (req, response) => {
     const { username, password } = req.body;
-    if (username === 'Admin') {
-        connection.then(dbo => {
-            dbo.collection('users').findOne({ name: username },
-                (error, result) => {
-                    if (error) Promise.reject(error);
+    response.setHeader('Content-Type', 'application/json')
+    if (typeof username !== 'string' || typeof password !== 'string') {
+        response.send("Invalid input");
+    }
+    connection.then(dbo => {
+        dbo.collection('users').findOne({ username }, (error, result) => {
+                if (error) Promise.reject(error);
+                if (result) { // User found
                     bcrypt.compare(password, result.password, (err, res) => {
-                        if (res) {
-                            req.session.isAdmin = true;
-                            req.session.username = 'Admin';
-                            response.setHeader('Content-Type', 'application/json')
-                            response.end(JSON.stringify({test: 'Successful login!'}));
+                        if (err) Promise.reject(err);
+                        if (res) { // Check if the password is valid for user
+                            if (result.isAdmin) {
+                                req.session.isAdmin = true;
+                                req.session.username = username;
+                            }
+                            response.end(JSON.stringify({
+                                result: true,
+                                message: 'Successful login!',
+                                username
+                            }));
                         } else {
-                            response.send(err);
-                            console.log("Result of bcrypt compare: " + err);
+                            response.end(JSON.stringify({ result: 'Invalid password!' }));
                         }
                     });
+                } else {
+                    response.end(JSON.stringify({ result: 'Could not find user!' }));
                 }
-            );
-        });
-    }
+            }
+        );
+    });
 });
 
 app.get('/rest/tvshows/:show', (req, res) => {
