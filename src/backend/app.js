@@ -37,7 +37,7 @@ connection.then(dbo => {
 
 // Check if user is already logged in 
 app.get('/loggedin', (req, res) => {
-    res.setHeader('Content-Type', 'application/json')
+    res.setHeader('Content-Type', 'application/json');
     if (req.session.username) {
         res.end(JSON.stringify({
             result: true,
@@ -51,11 +51,13 @@ app.get('/loggedin', (req, res) => {
 });
 
 // Validate user logins
-app.post('/login', jsonParser, (req, response) => {
+app.post('/login', jsonParser, (req, response, next) => {
     const { username, password } = req.body;
-    response.setHeader('Content-Type', 'application/json')
+    response.setHeader('Content-Type', 'application/json');
+    // End early if invalid input is received
     if (typeof username !== 'string' || typeof password !== 'string') {
-        response.send("Invalid input");
+        response.send(401);
+        return next();
     }
     connection.then(dbo => {
         dbo.collection('users').findOne({ username }, (error, result) => {
@@ -86,8 +88,7 @@ app.post('/login', jsonParser, (req, response) => {
                     message: 'Invalid login details'
                 }));
             }
-        }
-        );
+        });
     });
 });
 
