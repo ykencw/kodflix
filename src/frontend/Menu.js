@@ -8,8 +8,7 @@ class Menu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isOpen: false,
-            loggedIn: false
+            isOpen: false
         };
     }
 
@@ -29,7 +28,12 @@ class Menu extends React.Component {
             </button>
             <div className='panel'>
                 <div className='dimmer' onClick={this.toggleMenuOpen} />
-                <div className='bar'><div className='title'>Hello menu!</div>
+                <div className='bar'>
+                    <div className='title'>{
+                        this.props.loginInfo.name ? 
+                            `Welcome ${this.props.loginInfo.name}` :
+                            'Hello menu!'
+                    }</div>
                     <div className='container'>
                         <MenuLink route='/'
                             iconName='homeicon'
@@ -39,7 +43,7 @@ class Menu extends React.Component {
                             iconName='tvicon'
                             linkName='Admin TVShows'
                             clickHandler={this.toggleMenuOpen} />
-                        { this.state.loggedIn ?
+                        {this.props.loginInfo.name ?
                             <MenuLink route='/logout'
                                 iconName='logouticon'
                                 linkName='Log out'

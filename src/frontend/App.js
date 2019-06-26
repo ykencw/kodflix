@@ -8,6 +8,7 @@ import NotFound from './NotFound';
 import Menu from './Menu';
 import Admin from './admin/Admin';
 import Login from './Login';
+import Logout from './Logout';
 import Banner from './Banner';
 import DevOverlay from './DevOverlay';
 
@@ -23,13 +24,21 @@ class App extends React.Component {
       ReactGA.pageview(loc.pathname + loc.search + loc.hash);
     });
     this.state = {
-      showBanner: { show: false, banner: {} }
+      showBanner: { show: false, banner: {} },
+      loginInfo: { name: null }
     };
   }
 
-  showLoginBanner = banner => {
+  logIn = (banner, loginInfo) => {
     this.setState(() => ({
-      showBanner: { show: true, banner }
+      showBanner: {show: true, banner },
+      loginInfo
+    }));
+  }
+
+  logOut = () => {
+    this.setState(() => ({
+      loginInfo: { name: null }
     }));
   }
 
@@ -41,16 +50,18 @@ class App extends React.Component {
   }
 
   render() {
-    let showBanner = this.state.showBanner;
+    let {showBanner, loginInfo } = this.state;
     return (
       <div className="App">
-        <Menu />
+        <Menu loginInfo={loginInfo} />
         {process.env.NODE_ENV === 'development' ? <DevOverlay /> : <></>}
         <Switch>
           <Route exact path='/' component={TVShows} />
           <Route exact path='/not-found' component={NotFound} />
-          <Route exact path='/login' render={() =>
-            <Login showLoginBanner={this.showLoginBanner} />} />
+          <Route exact path='/login' render={props =>
+            <Login {...props} logIn={this.logIn} />} />
+          <Route exact path='/logout' render={() =>
+            <Logout logOut={this.logOut} />} />
           <Route path='/admin/tvshows' component={Admin} />
           <Route exact path='/:tvshowsID/play' component={Play} />
           <Route exact path='/:details' component={Details} />

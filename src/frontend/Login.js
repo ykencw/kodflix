@@ -1,6 +1,5 @@
 import React from 'react';
 import * as forge from 'node-forge';
-import { withRouter } from 'react-router-dom';
 
 import './Login.css';
 
@@ -32,15 +31,17 @@ class Login extends React.Component {
             })
         }).then(res => res.ok ? res.json() : Promise.reject())
             .then(res => {
-                console.log("Result: " + Object.entries(res));
                 if (res.result) { // Successful Login
-                    this.props.showLoginBanner({
+                    this.props.logIn({
                         message: `Successful Login, welcome ${res.username}!`,
                         isSuccess: true
+                    },
+                    {
+                        name: res.username
                     });
                     this.props.history.push('/');
                 } else { // Fail with message from backend
-                    this.props.showLoginBanner({
+                    this.props.logIn({
                         message: `${res.message}`,
                         isSuccess: false
                     });
@@ -69,4 +70,4 @@ class Login extends React.Component {
     }
 }
 
-export default withRouter(Login);
+export default Login;
