@@ -15,7 +15,7 @@ class TVShows extends React.Component {
         fetch(`/rest/tvshows`).then(res => {
             return res.ok ? res.json() : Promise.reject();
         }).then(tvshows => {
-            this.setState({tvshows});
+            this.setState({ tvshows });
         });
     }
 
@@ -27,9 +27,9 @@ class TVShows extends React.Component {
                     <div className="container">
                         {
                             tvshows.map(item => (
-                                <TVOverlay 
+                                <TVOverlay
                                     key={item.id}
-                                    id={item.id} 
+                                    id={item.id}
                                     title={item.title}
                                     synopsis={item.synopsis} />
                             ))
@@ -37,7 +37,7 @@ class TVShows extends React.Component {
                     </div>
                 </div> :
                 <Loading /> :
-                <Redirect to='/not-found' />;
+            <Redirect to='/not-found' />;
     }
 }
 

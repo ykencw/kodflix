@@ -24,10 +24,12 @@ connection.then(dbo => {
     bcrypt.hash(password, SALT_ROUNDS).then(hashedPassword => {
         users.updateOne(
             { username: 'Admin' },
-            { $set: {
-                password: hashedPassword,
-                isAdmin: true
-            }},
+            {
+                $set: {
+                    password: hashedPassword,
+                    isAdmin: true
+                }
+            },
             { upsert: true }
         );
     });
@@ -42,34 +44,34 @@ app.post('/login', jsonParser, (req, response) => {
     }
     connection.then(dbo => {
         dbo.collection('users').findOne({ username }, (error, result) => {
-                if (error) Promise.reject(error);
-                if (result) { // User found
-                    bcrypt.compare(password, result.password, (err, res) => {
-                        if (err) Promise.reject(err);
-                        if (res) { // Check if the password is valid for user
-                            if (result.isAdmin) {
-                                req.session.isAdmin = true;
-                                req.session.username = username;
-                            }
-                            response.end(JSON.stringify({
-                                result: true,
-                                message: 'Successful login!',
-                                username
-                            }));
-                        } else { // Invalid Password
-                            response.end(JSON.stringify({
-                                result: false,
-                                message: 'Invalid login details'
-                            }));
+            if (error) Promise.reject(error);
+            if (result) { // User found
+                bcrypt.compare(password, result.password, (err, res) => {
+                    if (err) Promise.reject(err);
+                    if (res) { // Check if the password is valid for user
+                        if (result.isAdmin) {
+                            req.session.isAdmin = true;
+                            req.session.username = username;
                         }
-                    });
-                } else { // User could not be found
-                    response.end(JSON.stringify({
-                        result: false,
-                        message: 'Invalid login details'
-                    }));
-                }
+                        response.end(JSON.stringify({
+                            result: true,
+                            message: 'Successful login!',
+                            username
+                        }));
+                    } else { // Invalid Password
+                        response.end(JSON.stringify({
+                            result: false,
+                            message: 'Invalid login details'
+                        }));
+                    }
+                });
+            } else { // User could not be found
+                response.end(JSON.stringify({
+                    result: false,
+                    message: 'Invalid login details'
+                }));
             }
+        }
         );
     });
 });

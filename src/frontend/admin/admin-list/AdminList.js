@@ -25,7 +25,7 @@ export default class AdminList extends React.Component {
         debugger;
         return tvshows ?
             tvshows[0] ?
-                <AdminListPage tvshows={tvshows}/> :
+                <AdminListPage tvshows={tvshows} /> :
                 <Loading /> :
             <Redirect to='/not-found' />;
     }

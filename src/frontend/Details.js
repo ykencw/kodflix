@@ -36,8 +36,10 @@ class Details extends React.Component {
 const DetailsPage = ({ tvshow }) => {
     return (<div
         className='Details'
-        style={{backgroundImage:
-            `url(${require(`./common/images/wallpapers/${tvshow.id}.jpg`)})`}
+        style={{
+            backgroundImage:
+                `url(${require(`./common/images/wallpapers/${tvshow.id}.jpg`)})`
+        }
         }>
         <div className='overlay'>
             <h1>{tvshow.title}</h1>

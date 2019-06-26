@@ -31,26 +31,27 @@ class App extends React.Component {
 
   logIn = (banner, loginInfo) => {
     this.setState(() => ({
-      showBanner: {show: true, banner },
+      showBanner: { show: true, banner },
       loginInfo
     }));
   }
 
-  logOut = () => {
+  logOut = (banner) => {
     this.setState(() => ({
+      showBanner: { show: true, banner },
       loginInfo: { name: null }
     }));
   }
 
-  hideLoginBanner = delay => {
-    setTimeout(() => 
-    this.setState(() => ({
-      showBanner: { show: false, banner: {} }
-    })), delay);
+  hideBanner = delay => {
+    setTimeout(() =>
+      this.setState(() => ({
+        showBanner: { show: false, banner: {} }
+      })), delay);
   }
 
   render() {
-    let {showBanner, loginInfo } = this.state;
+    let { showBanner, loginInfo } = this.state;
     return (
       <div className="App">
         <Menu loginInfo={loginInfo} />
@@ -67,9 +68,9 @@ class App extends React.Component {
           <Route exact path='/:details' component={Details} />
           <Route render={() => <Redirect to='/not-found' />} />
         </Switch>
-        {showBanner.show ? 
-          <Banner banner={showBanner.banner} 
-            hideLoginBanner={this.hideLoginBanner} /> :
+        {showBanner.show ?
+          <Banner banner={showBanner.banner}
+            hideBanner={this.hideBanner} /> :
           <></>}
       </div>
     );

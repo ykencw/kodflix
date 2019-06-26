@@ -13,7 +13,7 @@ export default function Admin({ match }) {
             <Route exact path={`${match.path}/list`} component={AdminList} />
             <Route exact path={`${match.path}/add`} component={AdminAdd} />
             <Route exact path={`${match.path}/edit`} component={AdminEdit} />
-            <Route render={() => <Redirect to='/not-found' /> } />
+            <Route render={() => <Redirect to='/not-found' />} />
         </Switch>
     </div>);
 }

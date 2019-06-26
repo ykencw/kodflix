@@ -32,13 +32,16 @@ class Login extends React.Component {
         }).then(res => res.ok ? res.json() : Promise.reject())
             .then(res => {
                 if (res.result) { // Successful Login
-                    this.props.logIn({
-                        message: `Successful Login, welcome ${res.username}!`,
-                        isSuccess: true
-                    },
-                    {
-                        name: res.username
-                    });
+                    this.props.logIn(
+                        {
+                            message: `Successful Login, welcome ${
+                                res.username}!`,
+                            isSuccess: true
+                        },
+                        {
+                            name: res.username
+                        }
+                    );
                     this.props.history.push('/');
                 } else { // Fail with message from backend
                     this.props.logIn({

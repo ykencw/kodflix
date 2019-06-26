@@ -30,7 +30,7 @@ class Menu extends React.Component {
                 <div className='dimmer' onClick={this.toggleMenuOpen} />
                 <div className='bar'>
                     <div className='title'>{
-                        this.props.loginInfo.name ? 
+                        this.props.loginInfo.name ?
                             `Welcome ${this.props.loginInfo.name}` :
                             'Hello menu!'
                     }</div>
