@@ -56,10 +56,23 @@ class App extends React.Component {
   }
 
   logOut = (banner) => {
-    this.setState(() => ({
-      showBanner: { show: true, banner },
-      loginInfo: { username: null }
-    }));
+    fetch('/logout').then(res => {
+      return res.ok ? res.json() : Promise.reject();
+    }).then(res => {
+      if (res.result) {
+        this.setState(() => ({
+          showBanner: { show: true, banner },
+          loginInfo: { username: null }
+        }));
+      } else {
+        this.setState(() => ({
+          showBanner: {
+            show: true,
+            banner: { message: 'Error: Unable to Logout', isSuccess: false }
+          }
+        }));
+      }
+    })
   }
 
   hideBanner = delay => {

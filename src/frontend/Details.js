@@ -37,8 +37,13 @@ const DetailsPage = ({ tvshow }) => {
     return (<div
         className='Details'
         style={{
-            backgroundImage:
-                `url(${require(`./common/images/wallpapers/${tvshow.id}.jpg`)})`
+            backgroundImage: (() => {
+                try {
+                    return `url(${require(`./common/images/wallpapers/${tvshow.id}.jpg`)})`;
+                } catch {
+                    return `url(${require(`./common/images/wallpapers/default.jpg`)})`;
+                }
+            })()
         }
         }>
         <div className='overlay'>
