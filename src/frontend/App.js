@@ -25,8 +25,23 @@ class App extends React.Component {
     });
     this.state = {
       showBanner: { show: false, banner: {} },
-      loginInfo: { name: null }
+      loginInfo: { username: null }
     };
+  }
+
+  componentDidMount() {
+    // Check if user is already logged in
+    fetch('/loggedIn').then(res => {
+      return res.ok ? res.json() : Promise.reject();
+    }).then(res => {
+      if (res.result) {
+        this.setState(() => ({
+          loginInfo: {
+            username: res.username
+          }
+        }));
+      }
+    });
   }
 
   logIn = (banner, loginInfo) => {
@@ -39,7 +54,7 @@ class App extends React.Component {
   logOut = (banner) => {
     this.setState(() => ({
       showBanner: { show: true, banner },
-      loginInfo: { name: null }
+      loginInfo: { username: null }
     }));
   }
 

@@ -30,8 +30,8 @@ class Menu extends React.Component {
                 <div className='dimmer' onClick={this.toggleMenuOpen} />
                 <div className='bar'>
                     <div className='title'>{
-                        this.props.loginInfo.name ?
-                            `Welcome ${this.props.loginInfo.name}` :
+                        this.props.loginInfo.username ?
+                            `Welcome ${this.props.loginInfo.username}` :
                             'Hello menu!'
                     }</div>
                     <div className='container'>
@@ -43,7 +43,7 @@ class Menu extends React.Component {
                             iconName='tvicon'
                             linkName='Admin TVShows'
                             clickHandler={this.toggleMenuOpen} />
-                        {this.props.loginInfo.name ?
+                        {this.props.loginInfo.username ?
                             <MenuLink route='/logout'
                                 iconName='logouticon'
                                 linkName='Log out'

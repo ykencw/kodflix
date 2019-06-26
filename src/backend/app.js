@@ -35,6 +35,21 @@ connection.then(dbo => {
     });
 });
 
+// Check if user is already logged in 
+app.get('/loggedin', (req, res) => {
+    res.setHeader('Content-Type', 'application/json')
+    if (req.session.username) {
+        res.end(JSON.stringify({
+            result: true,
+            username: req.session.username
+        }));
+    } else {
+        res.end(JSON.stringify({
+            result: false
+        }));
+    }
+});
+
 // Validate user logins
 app.post('/login', jsonParser, (req, response) => {
     const { username, password } = req.body;

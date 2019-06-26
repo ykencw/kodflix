@@ -26,7 +26,7 @@ function connect() {
 function sessionStore() {
     return session({
         secret: DB_SESSION_SALT,
-        cookie: { maxAge: 60 * 1000 },
+        cookie: { maxAge: 3 * 60 * 1000 },
         resave: false, // Don't need to resave when using MongoStore
         saveUninitialized: false, // Save space by ignoring uninit'd cookies
         store: new MongoStore({
