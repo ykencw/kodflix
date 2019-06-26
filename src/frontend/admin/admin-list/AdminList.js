@@ -22,7 +22,6 @@ export default class AdminList extends React.Component {
 
     render() {
         const { tvshows } = this.state;
-        debugger;
         return tvshows ?
             tvshows[0] ?
                 <AdminListPage tvshows={tvshows} /> :

@@ -39,19 +39,24 @@ class Menu extends React.Component {
                             iconName='homeicon'
                             linkName='Home'
                             clickHandler={this.toggleMenuOpen} />
-                        <MenuLink route='/admin/tvshows/list'
-                            iconName='tvicon'
-                            linkName='Admin TVShows'
-                            clickHandler={this.toggleMenuOpen} />
-                        {this.props.loginInfo.username ?
-                            <MenuLink route='/logout'
-                                iconName='logouticon'
-                                linkName='Log out'
-                                clickHandler={this.toggleMenuOpen} /> :
-                            <MenuLink route='/login'
-                                iconName='loginicon'
-                                linkName='Log in'
-                                clickHandler={this.toggleMenuOpen} />
+                        {
+                            this.props.loginInfo.isAdmin ?
+                                <MenuLink route='/admin/tvshows/list'
+                                    iconName='tvicon'
+                                    linkName='Admin TVShows'
+                                    clickHandler={this.toggleMenuOpen} /> :
+                                <></>
+                        }
+                        {
+                            this.props.loginInfo.username ?
+                                <MenuLink route='/logout'
+                                    iconName='logouticon'
+                                    linkName='Log out'
+                                    clickHandler={this.toggleMenuOpen} /> :
+                                <MenuLink route='/login'
+                                    iconName='loginicon'
+                                    linkName='Log in'
+                                    clickHandler={this.toggleMenuOpen} />
                         }
                         <div className='item'>Faux Option 4</div>
                         <div className='item'>Faux Option 5</div>

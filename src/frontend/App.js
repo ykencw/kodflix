@@ -13,6 +13,7 @@ import Banner from './Banner';
 import DevOverlay from './DevOverlay';
 
 import './App.css';
+import Loading from './Loading';
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class App extends React.Component {
     });
     this.state = {
       showBanner: { show: false, banner: {} },
-      loginInfo: { username: null }
+      loginInfo: null
     };
   }
 
@@ -37,9 +38,12 @@ class App extends React.Component {
       if (res.result) {
         this.setState(() => ({
           loginInfo: {
-            username: res.username
+            username: res.username,
+            ...(res.isAdmin ? { isAdmin: true } : {})
           }
         }));
+      } else {
+        this.setState(() => ({ loginInfo: {} }));
       }
     });
   }
@@ -66,6 +70,9 @@ class App extends React.Component {
   }
 
   render() {
+    if (!this.state.loginInfo) {
+      return <Loading />;
+    }
     let { showBanner, loginInfo } = this.state;
     return (
       <div className="App">
@@ -78,7 +85,8 @@ class App extends React.Component {
             <Login {...props} logIn={this.logIn} />} />
           <Route exact path='/logout' render={() =>
             <Logout logOut={this.logOut} />} />
-          <Route path='/admin/tvshows' component={Admin} />
+          <Route path='/admin/tvshows' render={props =>
+            <Admin {...props} loginInfo={loginInfo} />} />
           <Route exact path='/:tvshowsID/play' component={Play} />
           <Route exact path='/:details' component={Details} />
           <Route render={() => <Redirect to='/not-found' />} />
