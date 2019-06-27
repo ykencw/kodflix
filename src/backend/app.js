@@ -108,6 +108,7 @@ app.post('/login', jsonParser, (req, response, next) => {
 });
 
 app.get('/logout', (req, res) => {
+    console.log(req.session.id);
     req.session.destroy(err => {
         if (err) {
             console.log(err)
