@@ -32,7 +32,9 @@ class App extends React.Component {
 
   componentDidMount() {
     // Check if user is already logged in
-    fetch('/loggedIn').then(res => {
+    fetch('/loggedIn', {
+      credentials: 'include'
+    }).then(res => {
       return res.ok ? res.json() : Promise.reject();
     }).then(res => {
       if (res.result) {

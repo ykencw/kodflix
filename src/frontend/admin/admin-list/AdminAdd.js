@@ -30,6 +30,7 @@ export default class AdminAdd extends React.Component {
         let formData = new FormData(event.target);
         fetch('/rest/admin/addTVShow', {
             method: 'post',
+            credentials: 'include',
             body: formData
         }).then(res => {
             return res.ok ? res.json() : Promise.reject();
