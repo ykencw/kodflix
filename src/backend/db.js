@@ -30,6 +30,7 @@ function sessionStore() {
         resave: true,
         rolling: true, // Updates client session id so they don't expire early
         saveUninitialized: false, // Save space by ignoring uninit'd cookies
+        unset: 'destroy',
         store: new MongoStore({
             url,
             collection: 'sessions'
