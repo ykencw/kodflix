@@ -28,10 +28,7 @@ class TVShows extends React.Component {
                             tvshows.map(tvshow => (
                                 <TVOverlay
                                     key={tvshow.id}
-                                    id={tvshow.id}
-                                    title={tvshow.title}
-                                    synopsis={tvshow.synopsis}
-                                    imageCover={tvshow.imageCover} />
+                                    tvshow={tvshow} />
                             ))
                         }
                     </div>

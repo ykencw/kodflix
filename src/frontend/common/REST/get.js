@@ -19,14 +19,14 @@ function stringifyTVShowImages(tvshow) {
             {
                 imageCover: {
                     mimetype: tvshow.imageCover.mimetype,
-                    data: tvshow.imageCover.toString('base64')
+                    data: tvshow.imageCover.data.toString('base64')
                 }
             }),
         ...(tvshow.imageBackground &&
             {
                 imageBackground: {
                     mimetype: tvshow.imageBackground.mimetype,
-                    data: tvshow.imageBackground.toString('base64')
+                    data: tvshow.imageBackground.data.toString('base64')
                 }
             })
     };

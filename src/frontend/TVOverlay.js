@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function TVOverlay(tvshow) {
+export default function TVOverlay({tvshow}) {
     return (<Link to={`/${tvshow.id}`} className='item'>
         <img src={
             tvshow.imageCover ?
