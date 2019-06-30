@@ -2,6 +2,7 @@ import React from 'react';
 import TVOverlay from './TVOverlay';
 import { Redirect } from 'react-router-dom';
 import Loading from './Loading';
+import { tvshows } from './common/REST/get';
 
 class TVShows extends React.Component {
     constructor(props) {
@@ -12,9 +13,7 @@ class TVShows extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`/rest/tvshows`).then(res => {
-            return res.ok ? res.json() : Promise.reject();
-        }).then(tvshows => {
+        tvshows().then(tvshows => {
             this.setState({ tvshows });
         });
     }
@@ -26,12 +25,13 @@ class TVShows extends React.Component {
                 <div className="showTitles">
                     <div className="container">
                         {
-                            tvshows.map(item => (
+                            tvshows.map(tvshow => (
                                 <TVOverlay
-                                    key={item.id}
-                                    id={item.id}
-                                    title={item.title}
-                                    synopsis={item.synopsis} />
+                                    key={tvshow.id}
+                                    id={tvshow.id}
+                                    title={tvshow.title}
+                                    synopsis={tvshow.synopsis}
+                                    imageCover={tvshow.imageCover} />
                             ))
                         }
                     </div>

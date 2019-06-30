@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Loading from './Loading';
 import PlayButton from './PlayButton';
+import { tvshow } from './common/REST/get';
 
 import './Details.css';
 
@@ -14,10 +15,9 @@ class Details extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`/rest/tvshows/${this.props.match.params.details}`).then(res => {
-            return res.ok ? res.json() : Promise.reject();
-        }).then(tvshow => {
+        tvshow(this.props.match.params.details).then(tvshow => {
             this.setState({ tvshow });
+            console.log(tvshow.imageBackground);
         }).catch(() => {
             this.setState({ tvshow: undefined });
         });
@@ -36,16 +36,11 @@ class Details extends React.Component {
 const DetailsPage = ({ tvshow }) => {
     return (<div
         className='Details'
-        style={{
-            backgroundImage: (() => {
-                try {
-                    return `url(${require(`./common/images/wallpapers/${tvshow.id}.jpg`)})`;
-                } catch {
-                    return `url(${require(`./common/images/wallpapers/default.jpg`)})`;
-                }
-            })()
-        }
-        }>
+        style={ {
+            backgroundImage: tvshow.imageBackground ?
+                `url("data:${tvshow.imageBackground.mimetype};base64,${tvshow.imageBackground.data}")` : 
+                `url(${require(`./common/images/wallpapers/default.jpg`)})`
+        }}>
         <div className='overlay'>
             <h1>{tvshow.title}</h1>
             <div className='container'>

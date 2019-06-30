@@ -52,9 +52,12 @@ const TVList = ({ tvshows }) => {
     return (<table className='TVList'><tbody>
         <tr>
             {
-                Object.keys(tvshows[0]).map((k, i) => {
-                    return <th key={i}>{k}</th>;
-                })
+                Object.keys(tvshows[0]).reduce((acc, k) => {
+                    if (k === 'imageCover' || k === 'imageBackground') {
+                        return acc;
+                    }
+                    return acc.concat(<th key={k}>{k}</th>);
+                }, [])
             }
             <th>Edit</th>
             <th>Delete</th>
@@ -63,9 +66,12 @@ const TVList = ({ tvshows }) => {
             tvshows.map((tvshow, i) => {
                 return (<tr key={i}>
                     {
-                        Object.values(tvshow).map((v, i) => {
-                            return <td key={i}>{v}</td>;
-                        })
+                        Object.entries(tvshow).reduce((acc, kv) => {
+                            if (kv[0] === 'imageCover' || kv[0] === 'imageBackground') {
+                                return acc;
+                            }
+                            return acc.concat(<td key={kv[0]}>{kv[1]}</td>);
+                        }, [])
                     }
                     <td>
                         <img className='Edit icon'

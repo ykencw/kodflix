@@ -1,5 +1,7 @@
 const express = require('express');
 const db = require('./db');
+const Binary = require('mongodb').Binary;
+const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
@@ -119,18 +121,17 @@ app.get('/logout', (req, res) => {
             }));
         } else {
             connection.then(dbo => {
-                dbo.collection('sessions').deleteOne({ _id: id }, 
+                dbo.collection('sessions').deleteOne({ _id: id },
                     (error, result) => {
                         if (error) Promise.reject(error);
                         console.log("Session deleted from database: " + result);
+                        res.end(JSON.stringify({
+                            result: true,
+                            message: 'Successfully Logged out!'
+                        }));
                     }
                 );
             });
-            console.log("Session destroyed!");
-            res.end(JSON.stringify({
-                result: true,
-                message: 'Successfully Logged out!'
-            }));
         }
     })
 });
@@ -146,7 +147,7 @@ app.get('/rest/tvshows/:show', (req, res) => {
     });
 });
 
-app.get('/rest/tvshows', (req, res) => {
+app.get('/rest/tvshows', (_req, res) => {
     connection.then(dbo => {
         dbo.collection('tvshows').find({}).toArray((error, results) => {
             if (error) Promise.reject(error);
@@ -162,83 +163,67 @@ app.post('/rest/admin/addTVShow', upload.fields([{
 {
     name: 'imageBackground',
     maxCount: 1
-}]), (req, res, next) => {
+}]), (req, res) => {
     if (!req.session.isAdmin) { // End early if post is not from an admin
-        res.send(401);
-        next();
+        res.sendStatus(401);
+        return;
     }
-    // console.log(path.join(__dirname, "../frontend/common/images"));
-    // let {id, title, synopsis, videoID} = req.body;
-    // let 
-    //
+    let { id, title, synopsis, videoID } = req.body;
+    let imageCover;
+    let imageBackground;
     // Set default values and reject requests with invalid values
-    // if (id.length === 0 || blacklist.imageNames.includes(id)) {
-    //  res.send(401);
-    //  next();
-    // }
-    // if (title.length === 0) {
-    //  res.send(401);
-    //  next();
-    // }
-    // if (synopsis.length === 0) {
-    //  empty synopsis here
-    // }
-    // if (videoID.length === 0) {
-    //  videoID = 'VO38aC2z6ck';
-    // }
-    // if (req.files['imageCover'].length === 0) {
-    //  Set image as default imageCover
-    // }
-    // if (req.files['imageBackground'].length === 0) {
-    //  Set image as default imageBackground
-    // }
-
-
-
-    console.log(Object.entries(req));
-    // if (req.) {
-    //     return res.end()
-    // }
-    let formData = req.body;
-    console.log("Form data: " + Object.entries(formData));
-    if (req.files['imageCover']) {
-        console.log("Length of imageCover array is: " + req.files['imageCover'].length)
-        let imageCover = req.files['imageCover'][0]
-        console.log("ImageCover: " + imageCover +
-            "image fieldname: " + imageCover.fieldname +
-            "image originalname: " + imageCover.originalname +
-            "image encoding: " + imageCover.encoding +
-            "image mimetype: " + imageCover.mimetype +
-            "image size: " + imageCover.size +
-            "image destination: " + imageCover.destination +
-            "image filename: " + imageCover.filename +
-            "image path: " + imageCover.path +
-            "image buffer: " + imageCover.buffer
-        );
+    if (id.length === 0 || blacklist.imageNames.includes(id)) {
+        res.sendStatus(401);
+        return;
     }
-    let imageCoverPath = path.join(__dirname,
-        "../frontend/common/images/covers");
-    let imageBackgroundPath = path.join(__dirname,
-        "../frontend/common/images/wallpapers");
-    console.log(imageCoverPath);
-    console.log(imageBackgroundPath);
-    // console.log("ImageBackground: " + req.files['imageBackground'][0]);
-
-    // Add new movie into database
-    // connection.then(dbo => {
-    //     dbo.collection('tvshows').updateOne(
-    //         { id },
-    //         {
-    //             $set: {
-    //                 title,
-    //                 synopsis,
-    //                 videoID
-    //             }
-    //         },
-    //         { upsert: true }
-    //     );
-    // });
-    res.end('goood');
+    if (title.length === 0) {
+        res.sendStatus(401);
+        return;
+    }
+    if (!synopsis) {
+        synopsis = '';
+    }
+    if (!videoID) {
+        videoID = 'VO38aC2z6ck';
+    }
+    if (req.files['imageCover']) {
+        imageCover = req.files['imageCover'][0]
+        imageCover = {
+            mimetype: imageCover.mimetype,
+            data: Binary(fs.readFileSync(imageCover.path))
+        };
+    }
+    if (req.files['imageBackground']) {
+        imageBackground = req.files['imageBackground'][0];
+        imageBackground = {
+            mimetype: imageCover.mimetype,
+            data: Binary(fs.readFileSync(imageBackground.path))
+        }
+    }
+    // Add new tvshow into database
+    connection.then(dbo => {
+        dbo.collection('tvshows').updateOne(
+            { id },
+            {
+                $set: {
+                    title,
+                    synopsis,
+                    videoID,
+                    ... (imageCover && { imageCover }),
+                    ... (imageBackground && { imageBackground })
+                }
+            },
+            { upsert: true },
+            (error, _result) => {
+                if (error) Promise.reject(error);
+                console.log("Adding new tvshow to database, Result: " + _result);
+                res.end(JSON.stringify({
+                    result: true,
+                    message: 'Successfully Added TVShow to Database!'
+                }));
+            }
+        );
+    });
 });
 
 app.use(express.static(path.join(__dirname, buildPath)));

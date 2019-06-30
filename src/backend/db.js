@@ -27,7 +27,7 @@ function sessionStore() {
     return session({
         secret: DB_SESSION_SALT,
         cookie: { maxAge: 10 * 60 * 1000 },
-        resave: false,
+        resave: false, // Because MongoStore implements touch this can be kept false
         rolling: true, // Updates client session id so they don't expire early
         saveUninitialized: false, // Save space by ignoring uninit'd cookies
         unset: 'destroy',

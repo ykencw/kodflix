@@ -79,7 +79,7 @@ export default class AdminEdit extends React.Component {
                         <InputField name='videoID'
                             required={false}
                             wantsImage={false}
-                            placeholder={"Please enter the video ID" +
+                            placeholder={"Please enter the video ID " +
                                 "for the youtube trailer"}
                             handle={({ target }) =>
                                 this.handleInput(target.name, target.value)} />

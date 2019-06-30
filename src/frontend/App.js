@@ -41,7 +41,7 @@ class App extends React.Component {
         this.setState(() => ({
           loginInfo: {
             username: res.username,
-            ...(res.isAdmin ? { isAdmin: true } : {})
+            ...(res.isAdmin && { isAdmin: true })
           }
         }));
       } else {
