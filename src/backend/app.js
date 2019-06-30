@@ -151,7 +151,7 @@ app.get('/rest/tvshows', (_req, res) => {
     connection.then(dbo => {
         dbo.collection('tvshows').find({}).toArray((error, results) => {
             if (error) Promise.reject(error);
-            res.send(results);
+            res.send(results.map(tvshow => ({...tvshow, imageBackground: null})));
         });
     });
 });

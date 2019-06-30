@@ -17,7 +17,6 @@ class Details extends React.Component {
     componentDidMount() {
         tvshow(this.props.match.params.details).then(tvshow => {
             this.setState({ tvshow });
-            console.log(tvshow.imageBackground);
         }).catch(() => {
             this.setState({ tvshow: undefined });
         });
