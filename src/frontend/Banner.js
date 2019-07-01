@@ -2,10 +2,38 @@ import React from 'react';
 
 import './Banner.css'
 
-export default function Banner({ banner, hideBanner }) {
-    const { message, isSuccess } = banner;
-    hideBanner(3500);
-    return (<div className={`Banner ${isSuccess ? 'Success' : 'Fail'}`}>{
-        message
-    }</div>);
+export default class Banner extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            animate: true
+        };
+        this.props.hideBanner();
+    }
+
+    componentDidMount() {
+        this.props.attachRef(this);
+    }
+
+    componentWillUnmount() {
+        this.props.attachRef(undefined);
+    }
+
+    resetAnimation = () => {
+        this.setState({ animate: false },
+            () => setTimeout(() => this.setState({ animate: true }), 100)
+        );
+    }
+
+    render() {
+        const { banner } = this.props;
+        const { message, isSuccess } = banner;
+        return (<div className={
+            `Banner 
+            ${this.state.animate ? 'Animating' : ''} 
+            ${isSuccess ? 'Success' : 'Fail'}`
+        }>{
+                message
+            }</div>);
+    }
 }

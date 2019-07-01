@@ -51,8 +51,8 @@ class App extends React.Component {
   }
 
   logIn = (banner, loginInfo) => {
+    this.showNewBanner(banner);
     this.setState(() => ({
-      showBanner: { show: true, banner },
       loginInfo
     }));
   }
@@ -62,26 +62,39 @@ class App extends React.Component {
       return res.ok ? res.json() : Promise.reject();
     }).then(res => {
       if (res.result) {
+        this.showNewBanner(banner);
         this.setState(() => ({
-          showBanner: { show: true, banner },
           loginInfo: { username: null }
         }));
       } else {
-        this.setState(() => ({
-          showBanner: {
-            show: true,
-            banner: { message: 'Error: Unable to Logout', isSuccess: false }
-          }
-        }));
+        this.showNewBanner({
+          show: true,
+          banner: { message: 'Error: Unable to Logout', isSuccess: false }
+        });
       }
-    })
+    });
   }
 
-  hideBanner = delay => {
-    setTimeout(() =>
+  showNewBanner = banner => {
+    if (this.state.showBanner.show) {
+      clearTimeout(this.bannerTimeoutID);
+      this.banner.resetAnimation();
+      this.hideBanner();
+    }
+    this.setState(() => ({
+      showBanner: {
+        show: true,
+        banner
+      }
+    }));
+  }
+
+  hideBanner = (delay = 3500) => {
+    this.bannerTimeoutID = setTimeout(() => {
       this.setState(() => ({
         showBanner: { show: false, banner: {} }
-      })), delay);
+      }));
+    }, delay);
   }
 
   render() {
@@ -101,13 +114,17 @@ class App extends React.Component {
           <Route exact path='/logout' render={() =>
             <Logout logOut={this.logOut} />} />
           <Route path='/admin/tvshows' render={props =>
-            <Admin {...props} loginInfo={loginInfo} />} />
+            <Admin 
+              {...props}
+              loginInfo={loginInfo}
+              showNewBanner={this.showNewBanner} />} />
           <Route exact path='/:tvshowsID/play' component={Play} />
           <Route exact path='/:details' component={Details} />
           <Route render={() => <Redirect to='/not-found' />} />
         </Switch>
         {showBanner.show ?
-          <Banner banner={showBanner.banner}
+          <Banner attachRef={ref => this.banner = ref}
+            banner={showBanner.banner}
             hideBanner={this.hideBanner} /> :
           <></>}
       </div>

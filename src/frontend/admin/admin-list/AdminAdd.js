@@ -35,7 +35,26 @@ export default class AdminAdd extends React.Component {
         }).then(res => {
             return res.ok ? res.json() : Promise.reject();
         }).then(res => {
-            return res.result ? '' : ''; // send a nice response to let us know the tv show has been added
+            res.result ?
+                this.showSuccessBanner() :
+                this.showFailBanner();
+        }).catch(err => {
+            console.log(`Error: Failed to submit TVShow to database: ${err}`);
+            this.showFailBanner();
+        });
+    }
+
+    showSuccessBanner = () => {
+        this.props.showNewBanner({
+            message: 'Successfully submitted new TVShow!',
+            isSuccess: true
+        });
+    }
+
+    showFailBanner = () => {
+        this.props.showNewBanner({
+            message: 'Failed to submit new TVShow!',
+            isSuccess: false
         });
     }
 

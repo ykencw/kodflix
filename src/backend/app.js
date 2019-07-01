@@ -8,9 +8,9 @@ const jsonParser = bodyParser.json();
 const multer = require('multer');
 const upload = multer({
     dest: 'temp/', limits: {
-        fieldSize: 3 * 1000, // Fields can't be larger than 3KB
+        fieldSize: 3 * 1000, // Fields can't be larger than 3Kb
         fields: 10,
-        fileSize: 2.5 * 1000 * 1000, // Files can't be larger than 2.5MB
+        fileSize: 1.2 * 1000 * 1000, // Files can't be larger than 1.2Mb
         files: 2,
         parts: 12
     }
@@ -151,7 +151,7 @@ app.get('/rest/tvshows', (_req, res) => {
     connection.then(dbo => {
         dbo.collection('tvshows').find({}).toArray((error, results) => {
             if (error) Promise.reject(error);
-            res.send(results.map(tvshow => ({...tvshow, imageBackground: null})));
+            res.send(results.map(tvshow => ({ ...tvshow, imageBackground: null })));
         });
     });
 });
@@ -209,8 +209,8 @@ app.post('/rest/admin/addTVShow', upload.fields([{
                     title,
                     synopsis,
                     videoID,
-                    ... (imageCover && { imageCover }),
-                    ... (imageBackground && { imageBackground })
+                    ...(imageCover && { imageCover }),
+                    ...(imageBackground && { imageBackground })
                 }
             },
             { upsert: true },

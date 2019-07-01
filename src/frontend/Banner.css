@@ -7,8 +7,11 @@
     font-size: 25px;
     font-weight: 600;
     padding: 15px 0px 5px 0px;
-    animation: Banner ease 3s;
     animation-fill-mode: forwards;
+}
+
+.Banner.Animating {
+    animation: Banner ease 3s;
 }
 
 .Banner.Success {
