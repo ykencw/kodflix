@@ -202,27 +202,35 @@ app.post('/rest/admin/addTVShow', upload.fields([{
     }
     // Add new tvshow into database
     connection.then(dbo => {
-        dbo.collection('tvshows').updateOne(
-            { id },
-            {
-                $set: {
-                    title,
-                    synopsis,
-                    videoID,
-                    ...(imageCover && { imageCover }),
-                    ...(imageBackground && { imageBackground })
-                }
-            },
-            { upsert: true },
-            (error, _result) => {
-                if (error) Promise.reject(error);
-                console.log("Adding new tvshow to database, Result: " + _result);
+        dbo.collection('tvshows').findOne({ id }, (error, result) => {
+            if (error) Promise.reject(error);
+            if (result) {
                 res.end(JSON.stringify({
-                    result: true,
-                    message: 'Successfully Added TVShow to Database!'
+                    result: false,
+                    message: 'TVShow already exists in Database!'
                 }));
+            } else {
+                dbo.collection('tvshows').insertOne(
+                    {
+                        id,
+                        title,
+                        synopsis,
+                        videoID,
+                        ...(imageCover && { imageCover }),
+                        ...(imageBackground && { imageBackground })
+                    },
+                    (error, _result) => {
+                        if (error) Promise.reject(error);
+                        console.log("Adding new tvshow to database, Result: " + 
+                            _result);
+                        res.end(JSON.stringify({
+                            result: true,
+                            message: 'Successfully Added TVShow to Database!'
+                        }));
+                    }
+                );
             }
-        );
+        });
     });
 });
 

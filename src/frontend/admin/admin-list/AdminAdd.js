@@ -37,10 +37,10 @@ export default class AdminAdd extends React.Component {
         }).then(res => {
             res.result ?
                 this.showSuccessBanner() :
-                this.showFailBanner();
+                this.showFailBanner(res.message);
         }).catch(err => {
             console.log(`Error: Failed to submit TVShow to database: ${err}`);
-            this.showFailBanner();
+            this.showFailBanner('Form not filled correctly');
         });
     }
 
@@ -51,9 +51,9 @@ export default class AdminAdd extends React.Component {
         });
     }
 
-    showFailBanner = () => {
+    showFailBanner = reason => {
         this.props.showNewBanner({
-            message: 'Failed to submit new TVShow!',
+            message: `Failed to submit new TVShow: ${reason}`,
             isSuccess: false
         });
     }

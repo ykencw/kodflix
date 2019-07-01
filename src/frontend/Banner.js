@@ -28,12 +28,13 @@ export default class Banner extends React.Component {
     render() {
         const { banner } = this.props;
         const { message, isSuccess } = banner;
-        return (<div className={
-            `Banner 
-            ${this.state.animate ? 'Animating' : ''} 
-            ${isSuccess ? 'Success' : 'Fail'}`
-        }>{
-                message
-            }</div>);
+        return (
+            <div className={
+                `Banner 
+                ${this.state.animate ? 'Animating' : ''} 
+                ${isSuccess ? 'Success' : 'Fail'}`}>{
+                    message
+                }</div>
+        );
     }
 }

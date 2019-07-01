@@ -8,7 +8,8 @@ export default class AdminList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tvshows: []
+            tvshows: [],
+            tvshowToDelete: ''
         };
     }
 
@@ -20,17 +21,27 @@ export default class AdminList extends React.Component {
         });
     }
 
+    deleteShow = tvshowID => {
+        console.log("The id of the tvshow we want to delete is: " + tvshowID);
+        this.setState(() => ({
+            tvshowToDelete: tvshowID
+        }));
+    }
+
     render() {
-        const { tvshows } = this.state;
+        const { tvshows, tvshowToDelete } = this.state;
         return tvshows ?
             tvshows[0] ?
-                <AdminListPage tvshows={tvshows} /> :
+                <AdminListPage
+                    tvshowToDelete={tvshowToDelete}
+                    deleteShow={this.deleteShow}
+                    tvshows={tvshows} /> :
                 <Loading /> :
             <Redirect to='/not-found' />;
     }
 }
 
-const AdminListPage = ({ tvshows }) => {
+const AdminListPage = ({ tvshowToDelete, deleteShow, tvshows }) => {
     return <div className='AdminList'>
         <div className='Header'>
             <h4>TVShows Database:</h4>
@@ -41,15 +52,18 @@ const AdminListPage = ({ tvshows }) => {
                 <div>Add TVShow</div>
                 <img className='icon'
                     src={require(`../../common/images/addicon.svg`)}
-                    alt={'Edit icon'} />
+                    alt={'Add icon'} />
             </Link>
         </div>
-        <TVList tvshows={tvshows} />
+        <TVList
+            tvshowToDelete={tvshowToDelete}
+            deleteShow={deleteShow}
+            tvshows={tvshows} />
     </div>
 }
 
-const TVList = ({ tvshows }) => {
-    return (<table className='TVList'><tbody>
+const TVList = ({ tvshowToDelete, deleteShow, tvshows }) => {
+    return (<table className='TVList'>
         <tr>
             {
                 Object.keys(tvshows[0]).reduce((acc, k) => {
@@ -63,28 +77,38 @@ const TVList = ({ tvshows }) => {
             <th>Delete</th>
         </tr>
         {
-            tvshows.map((tvshow, i) => {
-                return (<tr key={i}>
-                    {
-                        Object.entries(tvshow).reduce((acc, kv) => {
-                            if (kv[0] === 'imageCover' || kv[0] === 'imageBackground') {
-                                return acc;
-                            }
-                            return acc.concat(<td key={kv[0]}>{kv[1]}</td>);
-                        }, [])
-                    }
-                    <td>
-                        <img className='Edit icon'
-                            src={require(`../../common/images/editicon.svg`)}
-                            alt={'Edit icon'} />
-                    </td>
-                    <td>
-                        <img className='Delete icon'
-                            src={require(`../../common/images/deleteicon.svg`)}
-                            alt={'Delete icon'} />
-                    </td>
-                </tr>);
+            tvshows.map((tvshow) => {
+                return tvshowToDelete === tvshow.id ?
+                    <tbody id='ToDelete'>To Delete{
+                        tvshowRow(deleteShow, tvshow)
+                    }</tbody> : 
+                    tvshowRow(deleteShow, tvshow);
             })
         }
-    </tbody></table>);
+    </table>);
+}
+
+const tvshowRow = (deleteShow, tvshow) => {
+    return (<tr key={tvshow.id}>
+        {
+            Object.entries(tvshow).reduce((acc, kv) => {
+                if (kv[0] === 'imageCover' || kv[0] === 'imageBackground') {
+                    return acc;
+                }
+                return acc.concat(<td key={kv[0]}>{kv[1]}</td>);
+            }, [])
+        }
+        <td>
+            <img className='Edit icon'
+                src={require(`../../common/images/editicon.svg`)}
+                alt={'Edit icon'} />
+        </td>
+        <td>
+            <img onClick={() => deleteShow(tvshow.id)}
+                className='Delete icon'
+                src={require(`../../common/images/deleteicon.svg`)}
+                alt={'Delete icon'} />
+        </td>
+    </tr>
+    );
 }
