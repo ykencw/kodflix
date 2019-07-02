@@ -1,13 +1,17 @@
-export async function tvshows() {
-    let res = await fetch(`/rest/tvshows`);
+export async function tvshows(headers = {}) {
+    let res = await fetch(`/rest/tvshows`, {
+        headers
+    });
     let tvshows = await res.json();
     return tvshows.map(tvshow => {
         return stringifyTVShowImages(tvshow);
     });
 }
 
-export async function tvshow(tvshowID) {
-    let res = await fetch(`/rest/tvshows/${tvshowID}`);
+export async function tvshow(tvshowID, headers = {}) {
+    let res = await fetch(`/rest/tvshows/${tvshowID}`, {
+        headers
+    });
     let tvshow = await res.json();
     return stringifyTVShowImages(tvshow);
 }

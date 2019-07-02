@@ -141,17 +141,33 @@ app.get('/rest/tvshows/:tvshow', (req, res) => {
         dbo.collection('tvshows').findOne({ id: req.params.tvshow },
             (error, result) => {
                 if (error) Promise.reject(error);
-                res.send(result);
+                if (req.header('KYK-Excludes')) {
+                    res.send({
+                        ...result,
+                        ...getExcludes(req.header('KYK-Excludes'))
+                    });
+                } else {
+                    res.send(result);
+                }
             }
         );
     });
 });
 
-app.get('/rest/tvshows', (_req, res) => {
+app.get('/rest/tvshows', (req, res) => {
     connection.then(dbo => {
         dbo.collection('tvshows').find({}).toArray((error, results) => {
             if (error) Promise.reject(error);
-            res.send(results.map(tvshow => ({ ...tvshow, imageBackground: null })));
+            if (req.header('KYK-Excludes')) {
+                res.send(results.map(tvshow => {
+                    return { 
+                        ...tvshow, 
+                        ...getExcludes(req.header('KYK-Excludes'))
+                    };
+                }));
+            } else {
+                res.send(results);
+            }
         });
     });
 });
@@ -269,3 +285,13 @@ app.get('*', (_req, res) => {
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+function getExcludes(excludeList) {
+    return excludeList.split(';').reduce(
+        (acc, keyToExclude) => {
+            acc[keyToExclude] = undefined;
+            return acc;
+        },
+        {}
+    );
+}
