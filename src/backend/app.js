@@ -133,12 +133,12 @@ app.get('/logout', (req, res) => {
                 );
             });
         }
-    })
+    });
 });
 
-app.get('/rest/tvshows/:show', (req, res) => {
+app.get('/rest/tvshows/:tvshow', (req, res) => {
     connection.then(dbo => {
-        dbo.collection('tvshows').findOne({ id: req.params.show },
+        dbo.collection('tvshows').findOne({ id: req.params.tvshow },
             (error, result) => {
                 if (error) Promise.reject(error);
                 res.send(result);
@@ -231,6 +231,35 @@ app.post('/rest/admin/addTVShow', upload.fields([{
                 );
             }
         });
+    });
+});
+
+app.delete('/rest/admin/delete/:tvshow', (req, res) => {
+    const id = req.params.tvshow;
+    console.log(`DELETE Request received, TVShow ID: ${id}`);
+    connection.then(dbo => {
+        dbo.collection('tvshows').deleteOne({ id },
+            (error, response) => {
+                if (error) Promise.reject(error);
+                if (response.result.ok) {
+                    console.log(
+                        `Deleted TVShow from database, result: ${response}`);
+                    res.end(JSON.stringify({
+                        result: true,
+                        message: `Successfully Deleted TVShow ${id}!`
+                    }));
+                } else {
+                    console.log(
+                        `Failed to Delete TVShow from database, result: ${
+                            response
+                        }`);
+                    res.end(JSON.stringify({
+                        result: false,
+                        message: `Database could not delete ${id}`
+                    }));
+                }
+            }
+        );
     });
 });
 

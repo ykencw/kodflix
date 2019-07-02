@@ -32,9 +32,8 @@ export default class AdminAdd extends React.Component {
             method: 'post',
             credentials: 'include',
             body: formData
-        }).then(res => {
-            return res.ok ? res.json() : Promise.reject();
-        }).then(res => {
+        }).then(res => res.ok ? res.json() : Promise.reject()
+        ).then(res => {
             res.result ?
                 this.showSuccessBanner() :
                 this.showFailBanner(res.message);
