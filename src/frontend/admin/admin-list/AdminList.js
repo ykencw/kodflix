@@ -165,15 +165,17 @@ const tvshowRow = (
     return (<tr key={tvshow.id}>
         {
             Object.entries(tvshow).map(kv => {
+                let className = `Cell${
+                    kv[0].charAt(0).toUpperCase() + kv[0].slice(1)}`;
                 if (kv[0] === 'thumbCover' || kv[0] === 'thumbBackground') {
                     const {mimetype, data} = kv[1];
-                    return <td key={kv[0]}>
+                    return <td className={className} key={kv[0]}>
                         <img src={
                             `data:${mimetype};base64,${data}`}
                             alt={`${tvshow.id} ${kv[0]}`} />
                     </td>
                 }
-                return <td key={kv[0]}>{kv[1]}</td>;
+                return <td className={className} key={kv[0]}>{kv[1]}</td>;
             })
         }
         <td>

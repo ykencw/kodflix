@@ -48,6 +48,14 @@
 
 .AdminList .TVList {
     border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.AdminList .TVList th, .AdminList .TVList td {
+    word-wrap: break-all;
+    width: 10%;
 }
 
 .AdminList .TVList th {
@@ -65,6 +73,10 @@
 
 .AdminList .TVList th, .AdminList .TVList td {
     border: 1px solid white;
+}
+
+.AdminList .TVList .CellSynopsis {
+    overflow: scroll;
 }
 
 .AdminList .Edit, .AdminList .Delete {

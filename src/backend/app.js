@@ -207,7 +207,9 @@ app.post('/rest/admin/addTVShow', upload.fields([{
     }
     if (req.files['imageCover']) {
         imageCover = req.files['imageCover'][0];
-        thumbCover = sharp(imageCover.path).resize(10, 10).toBuffer();
+        thumbCover = sharp(imageCover.path)
+            .resize(256, 256, { fit: 'inside' })
+            .toBuffer();
         imageCover = {
             mimetype: imageCover.mimetype,
             data: Binary(fs.readFileSync(imageCover.path))
@@ -215,7 +217,9 @@ app.post('/rest/admin/addTVShow', upload.fields([{
     }
     if (req.files['imageBackground']) {
         imageBackground = req.files['imageBackground'][0];
-        thumbBackground = sharp(imageBackground.path).resize(10, 10).toBuffer();
+        thumbBackground = sharp(imageBackground.path)
+            .resize(256, 256, { fit: 'inside' })
+            .toBuffer();
         imageBackground = {
             mimetype: imageCover.mimetype,
             data: Binary(fs.readFileSync(imageBackground.path))
