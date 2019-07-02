@@ -73,26 +73,58 @@
 
 .AdminList .TVList #ToDelete {
     background: red;
-    position: relative;
 }
 
-.AdminList .TVList .tr {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-/* .AdminList .TVList #ToDelete:after {
-    background: rgba(0, 0, 0, 0.7);
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
+.AdminList .TVList #ToDelete tr {
     height: 100%;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 200%;
-    content: '';
-    font-size: 18px;
-    font-weight: 700;
-} */
+}
+
+.AdminList .TVList #ToDelete #ConfirmDelete {
+    background: white;
+    border: 1px solid #000;
+}
+
+.AdminList .TVList #ToDelete #ConfirmDelete .DeleteItem  {
+    font-weight: 500;
+}
+
+.AdminList .TVList #ToDelete #ConfirmDelete #title {
+    color: black;
+    padding: 0.25em;
+    margin-bottom: 0.25em;
+    font-weight: 550;
+}
+
+.AdminList .TVList #ToDelete #ConfirmDelete button {
+    border: 1px solid transparent;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.AdminList .TVList #ToDelete #ConfirmDelete button:active {
+    transform: translateY(1px);
+  }
+
+.AdminList .TVList #ToDelete #ConfirmDelete button#Delete {
+    color: white;
+    background: red;
+    margin-bottom: 0.5em;
+    border-color: rgb(212, 0, 0);
+}
+
+.AdminList .TVList #ToDelete #ConfirmDelete button#Delete:hover {
+    background: rgb(232, 0, 0);
+    border-color: rgb(188, 0, 0);
+}
+
+.AdminList .TVList #ToDelete #ConfirmDelete button#Cancel {
+    background: white;
+    margin-top: 0.25em;
+    border-color: rgb(212, 212, 212);
+}
+
+.AdminList .TVList #ToDelete #ConfirmDelete button#Cancel:hover {
+    background: rgb(238, 238, 238);
+    border-color:rgb(192, 192, 192);
+}

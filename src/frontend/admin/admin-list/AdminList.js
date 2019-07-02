@@ -79,8 +79,8 @@ const TVList = ({ tvshowToDelete, deleteShow, tvshows }) => {
         {
             tvshows.map((tvshow) => {
                 return tvshowToDelete === tvshow.id ?
-                    <tbody id='ToDelete'>To Delete{
-                        tvshowRow(deleteShow, tvshow)
+                    <tbody id='ToDelete'>{
+                        tvshowRow(deleteShow, tvshow, true)
                     }</tbody> : 
                     tvshowRow(deleteShow, tvshow);
             })
@@ -88,7 +88,7 @@ const TVList = ({ tvshowToDelete, deleteShow, tvshows }) => {
     </table>);
 }
 
-const tvshowRow = (deleteShow, tvshow) => {
+const tvshowRow = (deleteShow, tvshow, confirmDelete) => {
     return (<tr key={tvshow.id}>
         {
             Object.entries(tvshow).reduce((acc, kv) => {
@@ -103,12 +103,20 @@ const tvshowRow = (deleteShow, tvshow) => {
                 src={require(`../../common/images/editicon.svg`)}
                 alt={'Edit icon'} />
         </td>
-        <td>
-            <img onClick={() => deleteShow(tvshow.id)}
-                className='Delete icon'
-                src={require(`../../common/images/deleteicon.svg`)}
-                alt={'Delete icon'} />
-        </td>
+        {
+            confirmDelete ?
+                <td id='ConfirmDelete'>
+                    <div className='DeleteItem' id='title'>Please confirm:</div>
+                    <button className='DeleteItem' id='Cancel'>&#215; Cancel</button>
+                    <button className='DeleteItem' id='Delete'>&#10004;  Delete</button>
+                </td> :
+                <td>
+                    <img onClick={() => deleteShow(tvshow.id)}
+                        className='Delete icon'
+                        src={require(`../../common/images/deleteicon.svg`)}
+                        alt={'Delete icon'} />
+                </td>
+        }
     </tr>
     );
 }
