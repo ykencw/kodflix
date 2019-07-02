@@ -32,6 +32,20 @@ function stringifyTVShowImages(tvshow) {
                     mimetype: tvshow.imageBackground.mimetype,
                     data: tvshow.imageBackground.data.toString('base64')
                 }
+            }),
+        ...(tvshow.thumbCover &&
+            {
+                thumbCover: {
+                    mimetype: tvshow.thumbCover.mimetype,
+                    data: tvshow.thumbCover.data.toString('base64')
+                }
+            }),
+        ...(tvshow.thumbBackground &&
+            {
+                thumbBackground: {
+                    mimetype: tvshow.thumbBackground.mimetype,
+                    data: tvshow.thumbBackground.data.toString('base64')
+                }
             })
     };
 }

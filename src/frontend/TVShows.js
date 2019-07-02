@@ -13,7 +13,9 @@ class TVShows extends React.Component {
     }
 
     componentDidMount() {
-        tvshows({'KYK-Excludes': 'imageBackground'}).then(tvshows => {
+        tvshows({
+            'KYK-Excludes': 'imageBackground;thumbCover;thumbBackground'
+        }).then(tvshows => {
             this.setState({ tvshows });
         });
     }

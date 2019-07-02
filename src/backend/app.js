@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./db');
+const sharp = require('sharp');
 const Binary = require('mongodb').Binary;
 const fs = require('fs');
 const path = require('path');
@@ -160,8 +161,8 @@ app.get('/rest/tvshows', (req, res) => {
             if (error) Promise.reject(error);
             if (req.header('KYK-Excludes')) {
                 res.send(results.map(tvshow => {
-                    return { 
-                        ...tvshow, 
+                    return {
+                        ...tvshow,
                         ...getExcludes(req.header('KYK-Excludes'))
                     };
                 }));
@@ -186,7 +187,9 @@ app.post('/rest/admin/addTVShow', upload.fields([{
     }
     let { id, title, synopsis, videoID } = req.body;
     let imageCover;
+    let thumbCover;
     let imageBackground;
+    let thumbBackground;
     // Set default values and reject requests with invalid values
     if (id.length === 0 || blacklist.imageNames.includes(id)) {
         res.sendStatus(401);
@@ -203,7 +206,8 @@ app.post('/rest/admin/addTVShow', upload.fields([{
         videoID = 'VO38aC2z6ck';
     }
     if (req.files['imageCover']) {
-        imageCover = req.files['imageCover'][0]
+        imageCover = req.files['imageCover'][0];
+        thumbCover = sharp(imageCover.path).resize(10, 10).toBuffer();
         imageCover = {
             mimetype: imageCover.mimetype,
             data: Binary(fs.readFileSync(imageCover.path))
@@ -211,6 +215,7 @@ app.post('/rest/admin/addTVShow', upload.fields([{
     }
     if (req.files['imageBackground']) {
         imageBackground = req.files['imageBackground'][0];
+        thumbBackground = sharp(imageBackground.path).resize(10, 10).toBuffer();
         imageBackground = {
             mimetype: imageCover.mimetype,
             data: Binary(fs.readFileSync(imageBackground.path))
@@ -226,25 +231,41 @@ app.post('/rest/admin/addTVShow', upload.fields([{
                     message: 'TVShow already exists in Database!'
                 }));
             } else {
-                dbo.collection('tvshows').insertOne(
-                    {
-                        id,
-                        title,
-                        synopsis,
-                        videoID,
-                        ...(imageCover && { imageCover }),
-                        ...(imageBackground && { imageBackground })
-                    },
-                    (error, _result) => {
-                        if (error) Promise.reject(error);
-                        console.log("Adding new tvshow to database, Result: " + 
-                            _result);
-                        res.end(JSON.stringify({
-                            result: true,
-                            message: 'Successfully Added TVShow to Database!'
-                        }));
-                    }
-                );
+                Promise.all([thumbCover, thumbBackground]).then(([tcdata, tbdata
+                ]) => {
+                    dbo.collection('tvshows').insertOne(
+                        {
+                            id,
+                            title,
+                            synopsis,
+                            videoID,
+                            ...(imageCover && { imageCover }),
+                            ...(imageBackground && { imageBackground }),
+                            ...(tcdata && { thumbCover: 
+                                {
+                                    mimetype: imageCover.mimetype,
+                                    data: tcdata,
+                                }
+                             }),
+                             ...(tbdata && { thumbBackground: 
+                                {
+                                    mimetype: imageBackground.mimetype,
+                                    data: tbdata,
+                                }
+                             }),
+                        },
+                        (error, _result) => {
+                            if (error) Promise.reject(error);
+                            console.log("Adding new tvshow to database, " + 
+                                "Result: " + _result);
+                            res.end(JSON.stringify({
+                                result: true,
+                                message: 'Successfully Added TVShow ' +
+                                    'to Database!'
+                            }));
+                        }
+                    );
+                });
             }
         });
     });
@@ -267,7 +288,7 @@ app.delete('/rest/admin/delete/:tvshow', (req, res) => {
                 } else {
                     console.log(
                         `Failed to Delete TVShow from database, result: ${
-                            response
+                        response
                         }`);
                     res.end(JSON.stringify({
                         result: false,

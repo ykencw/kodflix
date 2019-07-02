@@ -16,7 +16,7 @@ class Details extends React.Component {
 
     componentDidMount() {
         tvshow(this.props.match.params.details, {
-            'KYK-Excludes': 'imageCover'
+            'KYK-Excludes': 'imageCover;thumbCover;thumbBackground'
         }).then(tvshow => {
             this.setState({ tvshow });
         }).catch(() => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Loading from '../../Loading';
+import { tvshows } from '../../common/REST/get';
 
 import './AdminList.css';
 
@@ -14,8 +15,8 @@ export default class AdminList extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`/rest/tvshows`).then(res => {
-            return res.ok ? res.json() : Promise.reject();
+        tvshows({
+            'KYK-Excludes': 'imageCover;imageBackground'
         }).then(tvshows => {
             this.setState({ tvshows });
         });
@@ -126,10 +127,12 @@ const TVList = ({
         <tbody><tr>
             {
                 Object.keys(tvshows[0]).reduce((acc, k) => {
-                    if (k === 'imageCover' || k === 'imageBackground') {
-                        return acc;
-                    }
-                    return acc.concat(<th key={k}>{k}</th>);
+                    const key = k === 'thumbCover' ?
+                        'imageCover' :
+                        k === 'imageBackground' ?
+                            'thumbBackground' :
+                            k;
+                    return acc.concat(<th key={key}>{key}</th>);
                 }, [])
             }
             <th>Edit</th>
@@ -161,12 +164,17 @@ const tvshowRow = (
     deleteShow) => {
     return (<tr key={tvshow.id}>
         {
-            Object.entries(tvshow).reduce((acc, kv) => {
-                if (kv[0] === 'imageCover' || kv[0] === 'imageBackground') {
-                    return acc;
+            Object.entries(tvshow).map(kv => {
+                if (kv[0] === 'thumbCover' || kv[0] === 'thumbBackground') {
+                    const {mimetype, data} = kv[1];
+                    return <td key={kv[0]}>
+                        <img src={
+                            `data:${mimetype};base64,${data}`}
+                            alt={`${tvshow.id} ${kv[0]}`} />
+                    </td>
                 }
-                return acc.concat(<td key={kv[0]}>{kv[1]}</td>);
-            }, [])
+                return <td key={kv[0]}>{kv[1]}</td>;
+            })
         }
         <td>
             <img className='Edit icon'
@@ -179,17 +187,17 @@ const tvshowRow = (
                     <div
                         className='DeleteItem'
                         id='title'
-                        >Please confirm:</div>
+                    >Please confirm:</div>
                     <button
                         className='DeleteItem'
                         id='Cancel'
                         onClick={cancelDelete}
-                        >&#215; Cancel</button>
-                    <button 
+                    >&#215; Cancel</button>
+                    <button
                         className='DeleteItem'
                         id='Delete'
                         onClick={deleteShow}
-                        >&#10004;  Delete</button>
+                    >&#10004;  Delete</button>
                 </td> :
                 <td>
                     <img onClick={() => prepareDelete(tvshow.id)}
